@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.pyc
+
+# Environments
+.env
+venv/
+env/
+.venv/
+.conda/
+
+# PyCharm
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# ML artifacts - never commit large files
+mlruns/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# Data - never commit raw data
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.zip
+*.tar.gz
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
