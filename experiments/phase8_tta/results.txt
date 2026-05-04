@@ -1,0 +1,10 @@
+Phase 8: Test Time Augmentation
+
+efficientnetv2_tta:
+  Test AUC: 0.9766
+  Test Acc: 0.8696
+
+dinov2_registers_tta:
+  Test AUC: 0.9663
+  Test Acc: 0.8510
+

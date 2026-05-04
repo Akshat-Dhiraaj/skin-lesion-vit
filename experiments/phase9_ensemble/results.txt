@@ -1,0 +1,19 @@
+Phase 9: Ensemble
+
+Best weights: EfficientNetV2=0.60, DINOv2+Registers=0.40
+Test AUC: 0.9808
+Test Acc: 0.8836
+
+              precision    recall  f1-score   support
+
+         mel       0.66      0.72      0.69       167
+          nv       0.95      0.93      0.94      1006
+         bcc       0.87      0.90      0.88        77
+       akiec       0.81      0.71      0.76        49
+         bkl       0.74      0.79      0.76       165
+          df       1.00      0.76      0.87        17
+        vasc       0.91      0.95      0.93        22
+
+    accuracy                           0.88      1503
+   macro avg       0.85      0.83      0.83      1503
+weighted avg       0.89      0.88      0.89      1503
