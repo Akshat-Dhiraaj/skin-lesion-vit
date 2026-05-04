@@ -1,0 +1,18 @@
+Phase 6: phase6_aimv2
+Best Val AUC : 0.9550
+Test AUC     : 0.9376
+Test Acc     : 0.6800
+
+              precision    recall  f1-score   support
+
+         mel       0.32      0.69      0.44       167
+          nv       0.97      0.68      0.80      1006
+         bcc       0.53      0.65      0.58        77
+       akiec       0.46      0.69      0.55        49
+         bkl       0.55      0.62      0.59       165
+          df       0.30      0.71      0.42        17
+        vasc       0.55      0.82      0.65        22
+
+    accuracy                           0.68      1503
+   macro avg       0.52      0.70      0.58      1503
+weighted avg       0.80      0.68      0.71      1503

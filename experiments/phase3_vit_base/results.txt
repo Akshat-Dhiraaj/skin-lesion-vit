@@ -1,0 +1,18 @@
+Phase 3: phase3_vit_base
+Best Val AUC : 0.9665
+Test AUC     : 0.9538
+Test Acc     : 0.7638
+
+              precision    recall  f1-score   support
+
+         mel       0.45      0.68      0.54       167
+          nv       0.97      0.79      0.87      1006
+         bcc       0.65      0.86      0.74        77
+       akiec       0.47      0.73      0.57        49
+         bkl       0.54      0.67      0.60       165
+          df       0.48      0.65      0.55        17
+        vasc       0.74      0.91      0.82        22
+
+    accuracy                           0.76      1503
+   macro avg       0.61      0.75      0.67      1503
+weighted avg       0.82      0.76      0.78      1503

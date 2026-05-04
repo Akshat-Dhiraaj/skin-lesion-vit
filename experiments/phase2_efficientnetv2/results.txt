@@ -1,0 +1,18 @@
+Phase 2: phase2_efficientnetv2
+Best Val AUC : 0.9762
+Test AUC     : 0.9685
+Test Acc     : 0.8490
+
+              precision    recall  f1-score   support
+
+         mel       0.66      0.51      0.57       167
+          nv       0.92      0.93      0.93      1006
+         bcc       0.85      0.78      0.81        77
+       akiec       0.67      0.71      0.69        49
+         bkl       0.65      0.76      0.70       165
+          df       0.81      0.76      0.79        17
+        vasc       0.77      0.91      0.83        22
+
+    accuracy                           0.85      1503
+   macro avg       0.76      0.77      0.76      1503
+weighted avg       0.85      0.85      0.85      1503

@@ -1,0 +1,18 @@
+Phase 4: phase4_dinov2
+Best Val AUC : 0.9559
+Test AUC     : 0.9458
+Test Acc     : 0.7498
+
+              precision    recall  f1-score   support
+
+         mel       0.42      0.72      0.53       167
+          nv       0.96      0.76      0.85      1006
+         bcc       0.71      0.78      0.75        77
+       akiec       0.52      0.61      0.56        49
+         bkl       0.52      0.73      0.61       165
+          df       0.64      0.41      0.50        17
+        vasc       0.76      0.86      0.81        22
+
+    accuracy                           0.75      1503
+   macro avg       0.65      0.70      0.66      1503
+weighted avg       0.82      0.75      0.77      1503
