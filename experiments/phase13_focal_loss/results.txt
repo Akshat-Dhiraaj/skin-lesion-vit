@@ -1,0 +1,20 @@
+Phase 13: Focal Loss (gamma=2.0, class-weighted alpha)
+Base model: Phase 10 DINOv2+Registers full fine-tune
+
+Best Val AUC : 0.9682
+Test AUC     : 0.9562
+Test Acc     : 0.7731
+
+              precision    recall  f1-score   support
+
+         mel       0.41      0.79      0.54       167
+          nv       0.97      0.77      0.86      1006
+         bcc       0.75      0.84      0.79        77
+       akiec       0.69      0.67      0.68        49
+         bkl       0.60      0.75      0.67       165
+          df       0.65      0.76      0.70        17
+        vasc       0.83      0.86      0.84        22
+
+    accuracy                           0.77      1503
+   macro avg       0.70      0.78      0.73      1503
+weighted avg       0.84      0.77      0.79      1503

@@ -1,0 +1,20 @@
+Phase 11: Re-Ensemble (EfficientNetV2 + DINOv2+Registers full FT)
+
+EfficientNetV2 weight : 0.55
+DINOv2+Reg weight     : 0.45
+Test AUC              : 0.9768
+Test Acc              : 0.8776
+
+              precision    recall  f1-score   support
+
+         mel       0.68      0.69      0.69       167
+          nv       0.95      0.93      0.94      1006
+         bcc       0.88      0.84      0.86        77
+       akiec       0.81      0.69      0.75        49
+         bkl       0.69      0.80      0.74       165
+          df       1.00      0.76      0.87        17
+        vasc       0.91      0.91      0.91        22
+
+    accuracy                           0.88      1503
+   macro avg       0.85      0.80      0.82      1503
+weighted avg       0.88      0.88      0.88      1503
