@@ -1,0 +1,19 @@
+Phase 12: Multimodal (DINOv2+Registers + Age/Sex/Location)
+
+Best Val AUC : 0.9750
+Test AUC     : 0.9627
+Test Acc     : 0.8616
+
+              precision    recall  f1-score   support
+
+         mel       0.65      0.69      0.67       167
+          nv       0.94      0.93      0.93      1006
+         bcc       0.81      0.82      0.81        77
+       akiec       0.78      0.63      0.70        49
+         bkl       0.69      0.74      0.71       165
+          df       0.79      0.65      0.71        17
+        vasc       0.88      0.95      0.91        22
+
+    accuracy                           0.86      1503
+   macro avg       0.79      0.77      0.78      1503
+weighted avg       0.86      0.86      0.86      1503
