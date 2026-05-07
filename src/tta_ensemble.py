@@ -264,11 +264,72 @@ def run_ensemble():
     return best_auc
 
 
+# ── Phase 15: TTA on Phase 10 (DINOv2+Registers full fine-tune) ───────────────
+
+def run_tta_phase10():
+    """
+    TTA on Phase 10 — fully fine-tuned DINOv2+Registers.
+    Phase 8 only applied TTA to the frozen Phase 5 model (0.9653).
+    Phase 10 is the fully fine-tuned version (0.9692) — stronger base = bigger gain.
+    Saves probs for use in the 3-model ensemble (phase14_three_model_ensemble.py).
+    """
+    print("\n" + "="*60)
+    print("  PHASE 15: TTA ON PHASE 10 (DINOv2+Reg full fine-tune)")
+    print("="*60)
+
+    ckpt = os.path.join(CKPT_BASE, "phase10_dinov2_registers_finetune", "best_model.pth")
+    if not os.path.exists(ckpt):
+        print(f"ERROR: Phase 10 checkpoint not found at:\n  {ckpt}")
+        print("Run:  python src/engine.py --phase 10")
+        sys.exit(1)
+
+    df = load_metadata(DATA_DIR)
+    _, _, test_df = split_dataset(df)
+
+    print("\nLoading DINOv2+Registers (full fine-tune)...")
+    model  = load_dinov2_registers(ckpt)
+    tta_tf = get_tta_transforms(image_size=224)
+
+    mlflow.set_experiment("skin-lesion-all-phases")
+
+    with mlflow.start_run(run_name="phase15_tta_dinov2_registers_ft"):
+        probs, labels = tta_predict(model, test_df, tta_tf,
+                                    batch_size=16, model_type="dinov2")
+        auc = roc_auc_score(labels, probs, multi_class="ovr", average="macro")
+        acc = (probs.argmax(1) == labels).mean()
+
+        print(f"\nDINOv2+Reg (full FT) + TTA  —  Test AUC: {auc:.4f} | Test Acc: {acc:.4f}")
+        print(f"(Without TTA: 0.9692  |  Frozen+TTA Phase 8: 0.9663)")
+        mlflow.log_metrics({"test_auc_tta": auc, "test_acc_tta": acc})
+
+        ckpt_dir = os.path.join(CKPT_BASE, "phase15_tta_dinov2_ft")
+        os.makedirs(ckpt_dir, exist_ok=True)
+
+        # Save for 3-model ensemble
+        np.save(os.path.join(ckpt_dir, "dinov2_ft_tta_probs.npy"), probs)
+        np.save(os.path.join(ckpt_dir, "labels.npy"), labels)
+
+        result_path = os.path.join(ckpt_dir, "results.txt")
+        with open(result_path, "w") as f:
+            f.write("Phase 15: TTA on DINOv2+Registers (full fine-tune)\n")
+            f.write("Base checkpoint: phase10_dinov2_registers_finetune\n\n")
+            f.write(f"Test AUC : {auc:.4f}\n")
+            f.write(f"Test Acc : {acc:.4f}\n")
+            f.write(f"\n(Without TTA baseline: 0.9692)\n")
+            f.write(f"(Frozen model + TTA Phase 8: 0.9663)\n")
+        print(f"\nSaved probs  -> {ckpt_dir}/dinov2_ft_tta_probs.npy")
+        print(f"Saved labels -> {ckpt_dir}/labels.npy")
+        print(f"Saved report -> {result_path}")
+        print("\nNext step: python src/phase14_three_model_ensemble.py")
+
+    return probs, labels, auc
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--phase", type=int, required=True, choices=[8, 9])
+    parser.add_argument("--phase", type=int, required=True, choices=[8, 9, 15])
     args = parser.parse_args()
 
     if args.phase == 8:
@@ -278,3 +339,5 @@ if __name__ == "__main__":
             print("ERROR: Run Phase 8 first to generate TTA predictions.")
             sys.exit(1)
         run_ensemble()
+    elif args.phase == 15:
+        run_tta_phase10()
