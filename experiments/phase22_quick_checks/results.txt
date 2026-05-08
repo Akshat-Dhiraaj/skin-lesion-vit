@@ -1,0 +1,49 @@
+=== PHASE 22 QUICK CHECKS ===
+
+All variants use Phase 20 .npy artifacts. CPU only.
+Threshold-based metrics use F2-optimal thresholds tuned on VAL.
+
+Variant                                         Val AUC   Test AUC   Mel AUC   MelRcl   MelPrc     Acc
+------------------------------------------------------------------------------------------------------
+BASELINE: LogReg (Phase 21)                      0.9956     0.9840    0.9660   0.8323   0.6557  0.8969
+CHECK 1: Calibrated LogReg (per-class isotonic)    0.9963     0.9525    0.9622   0.8323   0.6526  0.8942
+CHECK 2: LogReg w/ cleaner mel-binary            0.9955     0.9838    0.9652   0.8563   0.6190  0.8929
+         ConvNeXt alone (w=1.0)                  0.9896     0.9883    0.9674   0.8563   0.5789  0.8782
+CHECK 3: ConvNeXt(0.05) + LogReg(0.95)           0.9956     0.9887    0.9723   0.8323   0.6588  0.8982
+
+Best by Test AUC : CHECK 3: ConvNeXt(0.05) + LogReg(0.95)  (0.9887)
+Best by Val AUC  : CHECK 1: Calibrated LogReg (per-class isotonic)  (val=0.9963, test=0.9525)  <- honest choice
+
+Per-class TEST AUC for best (by val): CHECK 1: Calibrated LogReg (per-class isotonic)
+  mel     : 0.9622  <-- melanoma
+  nv      : 0.9803
+  bcc     : 0.9499
+  akiec   : 0.9290
+  bkl     : 0.9556
+  df      : 0.9120
+  vasc    : 0.9787
+
+Thresholds (val-tuned) for CHECK 1: Calibrated LogReg (per-class isotonic):
+  vasc    : 0.0100
+  df      : 0.0100
+  mel     : 0.1856
+
+Classification Report (TEST, thresholds applied):
+              precision    recall  f1-score   support
+
+         mel       0.65      0.83      0.73       167
+          nv       0.97      0.92      0.95      1006
+         bcc       0.83      0.90      0.86        77
+       akiec       0.82      0.84      0.83        49
+         bkl       0.82      0.79      0.81       165
+          df       0.88      0.82      0.85        17
+        vasc       0.95      0.91      0.93        22
+
+    accuracy                           0.89      1503
+   macro avg       0.85      0.86      0.85      1503
+weighted avg       0.90      0.89      0.90      1503
+
+CHECK 3 best blend weight: w=0.05
+  ConvNeXt contribution: 0.05
+  LogReg contribution  : 0.95
+  → LogReg dominates; ConvNeXt adds little.

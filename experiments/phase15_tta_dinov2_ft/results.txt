@@ -1,0 +1,8 @@
+Phase 15: TTA on DINOv2+Registers (full fine-tune)
+Base checkpoint: phase10_dinov2_registers_finetune
+
+Test AUC : 0.9697
+Test Acc : 0.8470
+
+(Without TTA baseline: 0.9692)
+(Frozen model + TTA Phase 8: 0.9663)

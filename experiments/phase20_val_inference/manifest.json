@@ -1,0 +1,22 @@
+{
+  "models": [
+    "eff",
+    "dino_ft",
+    "p13",
+    "p12_mm",
+    "convnext",
+    "mel_binary"
+  ],
+  "n_val": 1502,
+  "n_test": 1503,
+  "n_classes": 7,
+  "class_names": [
+    "mel",
+    "nv",
+    "bcc",
+    "akiec",
+    "bkl",
+    "df",
+    "vasc"
+  ]
+}

@@ -1,0 +1,27 @@
+Phase 14: 3-Model Ensemble
+
+Model A: EfficientNetV2-M + TTA
+Model B: DINOv2+Registers (phase15_dinov2_ft_tta)
+Model C: Multimodal DINOv2+Reg (Phase 12)
+
+Best weights:
+  EfficientNetV2+TTA : 0.60
+  DINOv2+Reg+TTA     : 0.15
+  Multimodal         : 0.25
+
+Test AUC : 0.9818  (Phase 9 was 0.9814)
+Test Acc : 0.8909
+
+              precision    recall  f1-score   support
+
+         mel       0.72      0.68      0.70       167
+          nv       0.95      0.95      0.95      1006
+         bcc       0.86      0.88      0.87        77
+       akiec       0.86      0.76      0.80        49
+         bkl       0.74      0.80      0.77       165
+          df       1.00      0.76      0.87        17
+        vasc       0.91      0.95      0.93        22
+
+    accuracy                           0.89      1503
+   macro avg       0.86      0.83      0.84      1503
+weighted avg       0.89      0.89      0.89      1503

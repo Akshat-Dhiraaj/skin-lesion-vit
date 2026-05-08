@@ -1,0 +1,45 @@
+=== PHASE 21: FINAL ENSEMBLE RESULTS ===
+
+Models used  : ['eff', 'dino_ft', 'p13', 'p12_mm', 'convnext', 'mel_binary']
+Selected     : LogReg
+Val AUC      : 0.9956
+Test AUC     : 0.9840
+
+All meta-learner test AUCs:
+  SLSQP-logit       val=0.9893  test=0.9772
+  LogReg            val=0.9956  test=0.9840
+  Meta-meta         val=0.9942  test=0.9805
+
+Thresholds applied (val-tuned, F2-optimal):
+  vasc    : 0.0337
+  df      : 0.0396
+  mel     : 0.2093
+
+Per-class TEST AUC:
+  mel     : 0.9660  <-- melanoma
+  nv      : 0.9824
+  bcc     : 0.9970
+  akiec   : 0.9940
+  bkl     : 0.9794
+  df      : 0.9700
+  vasc    : 0.9993
+
+Melanoma summary:
+  AUC       : 0.9660
+  Recall    : 0.8323
+  Precision : 0.6557
+
+Classification Report (thresholds applied):
+              precision    recall  f1-score   support
+
+         mel       0.66      0.83      0.73       167
+          nv       0.97      0.93      0.95      1006
+         bcc       0.84      0.90      0.87        77
+       akiec       0.89      0.84      0.86        49
+         bkl       0.82      0.81      0.81       165
+          df       0.88      0.82      0.85        17
+        vasc       0.95      0.91      0.93        22
+
+    accuracy                           0.90      1503
+   macro avg       0.86      0.86      0.86      1503
+weighted avg       0.91      0.90      0.90      1503

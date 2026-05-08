@@ -1,0 +1,17 @@
+Phase 19: Binary Mel-vs-Rest Specialist
+Backbone: DINOv2+Registers (Phase 10 init), last 4 layers + head trained
+Loss: BinaryFocalLoss(alpha=0.75, gamma=2.0)
+
+Best Val Mel-AUC : 0.9351
+Test Mel-AUC     : 0.9402
+Test Mel Recall  : 0.8144
+Test Mel Precision: 0.5075
+
+              precision    recall  f1-score   support
+
+     non-mel       0.97      0.90      0.94      1336
+         mel       0.51      0.81      0.63       167
+
+    accuracy                           0.89      1503
+   macro avg       0.74      0.86      0.78      1503
+weighted avg       0.92      0.89      0.90      1503

@@ -1,0 +1,11 @@
+META-LEARNER COMPARISON
+==================================================
+
+Selected by val AUC (no test peeking).
+Final selection: LogReg
+
+Meta-learner        Val AUC    Test AUC
+----------------------------------------
+SLSQP-logit          0.9893      0.9772
+LogReg               0.9956      0.9840  *
+Meta-meta            0.9942      0.9805
