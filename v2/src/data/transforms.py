@@ -97,30 +97,11 @@ def get_val_transform(image_size: int = 224, model_type: str | None = None) -> A
     ])
 
 
-def get_tta_transforms(image_size: int = 224, model_type: str | None = None) -> list[A.Compose]:
-    """
-    8 deterministic TTA views: original + 3 rotations + 3 flips + zoom.
-    Average softmax probabilities across all views at inference time.
-    """
-    mean, std = get_norm_stats(model_type)
-    norm = A.Normalize(mean=mean, std=std)
-    resize = A.Resize(image_size, image_size)
-    tail = [norm, ToTensorV2()]
-    return [
-        # 1. Original
-        A.Compose([resize] + tail),
-        # 2. H-flip
-        A.Compose([resize, A.HorizontalFlip(p=1.0)] + tail),
-        # 3. V-flip
-        A.Compose([resize, A.VerticalFlip(p=1.0)] + tail),
-        # 4. Rotate 90
-        A.Compose([resize, A.Rotate(limit=(90, 90), p=1.0)] + tail),
-        # 5. Rotate 180
-        A.Compose([resize, A.Rotate(limit=(180, 180), p=1.0)] + tail),
-        # 6. Rotate 270
-        A.Compose([resize, A.Rotate(limit=(270, 270), p=1.0)] + tail),
-        # 7. H-flip + V-flip
-        A.Compose([resize, A.HorizontalFlip(p=1.0), A.VerticalFlip(p=1.0)] + tail),
-        # 8. Slight zoom
-        A.Compose([resize, A.Affine(scale=(0.9, 1.1), p=1.0)] + tail),
-    ]
+# NOTE (refactor 2026-05-16): a `get_tta_transforms` previously lived here but
+# was dead code — the live 8-view TTA pipeline that produced every committed
+# `tta_results.txt` is `src/tta.py:get_tta_transforms`. The two were NOT
+# identical (this one used `A.Affine(scale=(0.9,1.1))` for view 8; tta.py uses
+# `A.ShiftScaleRotate(scale_limit=0.1)`), so they were intentionally NOT merged
+# under the strict behavior-preservation refactor — merging would have changed
+# committed TTA numbers. The unused copy was removed; `src/tta.py` is the single
+# source of truth for TTA augmentation. Do not re-add a TTA factory here.

@@ -126,6 +126,12 @@ def slsqp_weights(probs_list: list[np.ndarray], objective_fn) -> np.ndarray:
     Restarts from uniform + each one-hot corner pulled toward uniform — mirrors
     src/ensemble.py's strategy. AUC is non-smooth, so a single restart from
     uniform almost always gets stuck on the plateau.
+
+    Deliberately a separate generic-objective_fn implementation (not merged
+    with ensemble.slsqp_search / post_hoc.fit_per_class_weights): it must take
+    an arbitrary objective AND fall back to the no-TENT baseline per model.
+    The committed cross_dataset_ensemble*/report.txt files came from this
+    exact routine; kept distinct under the strict behavior-preservation policy.
     """
     M = len(probs_list)
     bounds = [(0.01, 0.99)] * M

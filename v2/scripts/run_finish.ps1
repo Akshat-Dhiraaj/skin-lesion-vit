@@ -15,35 +15,11 @@
 #   2. Regenerate the 4 figures from whatever is on disk.
 #   3. Recompile D:\ML\RESULTS_REPORT.md.
 #
-# Run later with:
-#   cd D:\ML\skin-lesion-vit-v2; .\scripts\run_finish.ps1 *>&1 | Tee-Object -FilePath D:\ML\finish_stdout.log
+# Run later with (path-independent — resolves its own location):
+#   pwsh -File D:\ML\skin-lesion-vit\v2\scripts\run_finish.ps1
 # ---------------------------------------------------------------------------
 
-$ErrorActionPreference = 'Continue'
-$WorkRoot = 'D:\ML\skin-lesion-vit-v2'
-$LogFile  = 'D:\ML\OVERNIGHT_RESULTS.md'
-$StartTime = Get-Date
-
-Set-Location $WorkRoot
-& "$WorkRoot\.venv\Scripts\Activate.ps1"
-$env:PYTHONIOENCODING = 'utf-8'
-
-function Log-Line { param([string]$L); $ts=(Get-Date).ToString('yyyy-MM-ddTHH:mm:ssZ'); "[$ts] $L" | Tee-Object -FilePath $LogFile -Append }
-function Run-Step {
-    param([string]$Tag, [string]$Cmd)
-    Log-Line "$Tag : START -- $Cmd"
-    $s = Get-Date
-    try {
-        Invoke-Expression $Cmd
-        $e = $LASTEXITCODE
-        $d = ((Get-Date) - $s).TotalMinutes
-        if ($e -eq 0 -or $e -eq $null) { Log-Line ("$Tag : DONE  -- {0:N1} min" -f $d) }
-        else { Log-Line ("$Tag : FAIL  -- exit={0}  ({1:N1} min)" -f $e, $d) }
-    } catch {
-        $d = ((Get-Date) - $s).TotalMinutes
-        Log-Line ("$Tag : ERROR -- $($_.Exception.Message)  ({0:N1} min)" -f $d)
-    }
-}
+. "$PSScriptRoot\_lib.ps1"   # $WorkRoot, $LogFile, $StartTime, Log-Line, Run-Step, venv, UTF-8
 
 Log-Line ""
 Log-Line "================================================================"
@@ -66,7 +42,7 @@ Log-Line ""
 Log-Line "================================================================"
 Log-Line ("RUN-FINISH END -- {0:N1} min" -f $dur)
 Log-Line "Outputs:"
-Log-Line "  D:\ML\RESULTS_REPORT.md                                      <- start here"
-Log-Line "  D:\ML\skin-lesion-vit-v2\figures\fig{1,2,3,4}.{png,pdf}"
-Log-Line "  experiments\cross_dataset_ensemble_tent_best\report.txt"
+Log-Line "  info_bank\RESULTS_REPORT.md                                  <- start here"
+Log-Line "  v2\figures\fig{1,2,3,4}.{png,pdf}"
+Log-Line "  v2\experiments\cross_dataset_ensemble_tent_best\report.txt"
 Log-Line "================================================================"

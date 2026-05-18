@@ -18,7 +18,6 @@ Changes vs the original skin-lesion-vit engine.py
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
 import math
 

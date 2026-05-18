@@ -16,9 +16,8 @@ Changes vs the original skin-lesion-vit repo
 
 from __future__ import annotations
 
-import os
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Tuple
 
 import numpy as np
 import pandas as pd

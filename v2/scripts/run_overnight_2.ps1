@@ -18,32 +18,7 @@
 # Estimated total: ~5 hr.
 # ---------------------------------------------------------------------------
 
-$ErrorActionPreference = 'Continue'
-$WorkRoot = 'D:\ML\skin-lesion-vit-v2'
-$LogFile = 'D:\ML\OVERNIGHT_RESULTS.md'
-$StartTime = Get-Date
-
-Set-Location $WorkRoot
-& "$WorkRoot\.venv\Scripts\Activate.ps1"
-$env:PYTHONIOENCODING = 'utf-8'
-
-function Log-Line { param([string]$Line); $ts = (Get-Date).ToString('yyyy-MM-ddTHH:mm:ssZ'); "[$ts] $Line" | Tee-Object -FilePath $LogFile -Append }
-
-function Run-Step {
-    param([string]$Tag, [string]$Cmd)
-    Log-Line "$Tag : START -- $Cmd"
-    $s = Get-Date
-    try {
-        Invoke-Expression $Cmd
-        $e = $LASTEXITCODE
-        $d = ((Get-Date) - $s).TotalMinutes
-        if ($e -eq 0 -or $e -eq $null) { Log-Line ("$Tag : DONE  -- {0:N1} min" -f $d) }
-        else { Log-Line ("$Tag : FAIL  -- exit={0}  ({1:N1} min)" -f $e, $d) }
-    } catch {
-        $d = ((Get-Date) - $s).TotalMinutes
-        Log-Line ("$Tag : ERROR -- $($_.Exception.Message)  ({0:N1} min)" -f $d)
-    }
-}
+. "$PSScriptRoot\_lib.ps1"   # $WorkRoot, $LogFile, $StartTime, Log-Line, Run-Step, venv, UTF-8 (historical script; behavior unchanged)
 
 Log-Line ""
 Log-Line "================================================================"

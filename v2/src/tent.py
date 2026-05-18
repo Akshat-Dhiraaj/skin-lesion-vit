@@ -20,7 +20,6 @@ from __future__ import annotations
 import copy
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from tqdm import tqdm
 
 NORM_TYPES = (nn.BatchNorm1d, nn.BatchNorm2d, nn.BatchNorm3d, nn.LayerNorm, nn.GroupNorm)

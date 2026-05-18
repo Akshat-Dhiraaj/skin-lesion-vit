@@ -1,6 +1,6 @@
 # Skin Lesion v2 — Results Report
 
-> Auto-generated from `experiments/` artifacts on 2026-05-16 08:03 UTC.
+> Auto-generated from `experiments/` artifacts on 2026-05-18 07:33 UTC.
 
 This document captures the headline numbers, figures, and recipe from the v2 (lesion-level-splits, cross-dataset audited) iteration of the skin lesion classification project. For project context, see [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md); for findings + publishability discussion, see [`FINDINGS.md`](FINDINGS.md).
 
@@ -18,7 +18,7 @@ This document captures the headline numbers, figures, and recipe from the v2 (le
 
 ## 1. Sample efficiency on HAM10000
 
-![Sample efficiency](figures/fig1_sample_efficiency.png)
+![Sample efficiency](../v2/figures/fig1_sample_efficiency.png)
 
 
 | Train fraction | Train lesions | PanDerm probe | EfficientNetV2-M | ConvNeXt-V2 | DINOv2+Reg FT |
@@ -56,7 +56,7 @@ This document captures the headline numbers, figures, and recipe from the v2 (le
 
 ## 3. Cross-dataset evaluation
 
-![Fairness frontier](figures/fig2_fairness_frontier.png)
+![Fairness frontier](../v2/figures/fig2_fairness_frontier.png)
 
 
 ### ISIC 2019 (HAM10K-7 taxonomy)
@@ -100,7 +100,7 @@ This document captures the headline numbers, figures, and recipe from the v2 (le
 
 ## 4. Test-time adaptation (TENT)
 
-![TENT improvement](figures/fig3_tent_improvement.png)
+![TENT improvement](../v2/figures/fig3_tent_improvement.png)
 
 
 Per-(model, dataset) TENT improvement on dark-skin Malignant AUC, comparing baseline (no TENT) against the best-tuned TENT config:
@@ -119,7 +119,7 @@ Per-(model, dataset) TENT improvement on dark-skin Malignant AUC, comparing base
 
 ## 5. PanDerm loader fix — impact
 
-![PanDerm fix](figures/fig4_pandem_loader_fix.png)
+![PanDerm fix](../v2/figures/fig4_pandem_loader_fix.png)
 
 
 The DermLIP/PanDerm HuggingFace repo (`redlessone/DermLIP_PanDerm-base-w-PubMed-256`) is an **open_clip** checkpoint without a `config.json`. `transformers.AutoModel.from_pretrained` raises and a silent `try/except` falls back to `facebook/dinov2-with-registers-base`. Every `pandem_*` checkpoint (without `_real`) is therefore DINOv2+Registers, not PanDerm.
@@ -140,7 +140,7 @@ The fix (`RealPanDermClassifier` in `src/models/registry.py`): build `timm.model
 ## 7. Recipe to reproduce headline numbers
 
 ```powershell
-cd D:\ML\skin-lesion-vit\v2
+cd D:\ML\skin-lesion-vit-v2
 .\.venv\Scripts\Activate.ps1
 $env:PYTHONIOENCODING="utf-8"
 
@@ -174,4 +174,4 @@ Get-Content experiments\cross_dataset_ensemble_tent_lr1e-3\report.txt
 
 ---
 
-*Report assembled from artifacts under `D:/ML/../v2/experiments/` and figures under `figures/`. Trust the underlying `.txt` files if any number here disagrees with them.*
+*Report assembled from artifacts under `skin-lesion-vit/v2/experiments/` and figures under `skin-lesion-vit/v2/figures/`. Trust the underlying `.txt` files if any number here disagrees with them.*

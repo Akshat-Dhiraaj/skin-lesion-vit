@@ -35,7 +35,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from sklearn.metrics import classification_report, roc_auc_score
+from sklearn.metrics import roc_auc_score
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
@@ -98,10 +98,6 @@ def map_ham10k_probs_to_universal(probs_7: np.ndarray) -> np.ndarray:
     """
     n = probs_7.shape[0]
     out = np.zeros((n, 3), dtype=np.float32)
-
-    mal_idx = UNIVERSAL_TO_IDX["malignant"]
-    ben_idx = UNIVERSAL_TO_IDX["benign"]
-    non_idx = UNIVERSAL_TO_IDX["non_neoplastic"]
 
     for ham_cls, ham_i in HAM10K_TO_IDX.items():
         u = HAM10K_TO_UNIVERSAL[ham_cls]

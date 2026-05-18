@@ -226,10 +226,10 @@ def fig3_tent_improvement():
     base_vals = [p[2] for p in pairs]
     tent_vals = [p[3] for p in pairs]
     labels = [f"{p[1]}\n({p[0]})" for p in pairs]
-    bars1 = ax.bar(x - width / 2, base_vals, width, label="baseline (no TENT)",
-                    color="#999999", edgecolor="black", linewidth=0.7)
-    bars2 = ax.bar(x + width / 2, tent_vals, width, label="+ TENT (best config)",
-                    color="#0072B2", edgecolor="black", linewidth=0.7)
+    ax.bar(x - width / 2, base_vals, width, label="baseline (no TENT)",
+           color="#999999", edgecolor="black", linewidth=0.7)
+    ax.bar(x + width / 2, tent_vals, width, label="+ TENT (best config)",
+           color="#0072B2", edgecolor="black", linewidth=0.7)
 
     # Annotate deltas
     for i, (b, t) in enumerate(zip(base_vals, tent_vals)):
@@ -277,10 +277,10 @@ def fig4_pandem_loader_fix():
     width = 0.4
     f_vals = [v if v is not None else np.nan for v in fallback]
     r_vals = [v if v is not None else np.nan for v in real]
-    bars1 = ax.bar(x - width / 2, f_vals, width, label="DINOv2+Registers (silent fallback)",
-                    color="#999999", edgecolor="black", linewidth=0.7)
-    bars2 = ax.bar(x + width / 2, r_vals, width, label="real PanDerm (BEiT via open_clip)",
-                    color="#D55E00", edgecolor="black", linewidth=0.7)
+    ax.bar(x - width / 2, f_vals, width, label="DINOv2+Registers (silent fallback)",
+           color="#999999", edgecolor="black", linewidth=0.7)
+    ax.bar(x + width / 2, r_vals, width, label="real PanDerm (BEiT via open_clip)",
+           color="#D55E00", edgecolor="black", linewidth=0.7)
 
     for i, (a, b) in enumerate(zip(fallback, real)):
         if a is not None and b is not None:

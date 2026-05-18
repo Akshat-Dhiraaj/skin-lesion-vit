@@ -99,7 +99,14 @@ def load_split_probs(model_keys: list[str], split: str, ckpt_base: str):
 # ── 1. Per-class weighted ensemble ────────────────────────────────────────────
 
 def fit_per_class_weights(probs_list_val, val_labels) -> np.ndarray:
-    """For each class c, SLSQP-maximise OvR AUC for class c on val."""
+    """For each class c, SLSQP-maximise OvR AUC for class c on val.
+
+    Intentionally separate from ensemble.slsqp_search (global weights) and
+    cross_dataset_ensemble.slsqp_weights (generic objective + fallback): this
+    fits one weight vector *per class* with its own init points. The committed
+    post_hoc/results.txt (0.9733) came from this exact routine; not merged
+    under the strict behavior-preservation policy.
+    """
     n_models = len(probs_list_val)
     n_classes = probs_list_val[0].shape[1]
     weights = np.full((n_classes, n_models), 1.0 / n_models)

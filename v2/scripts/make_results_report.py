@@ -13,10 +13,11 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent
-EXP = ROOT / "experiments"
-FIG_DIR = ROOT / "figures"
-OUT = ROOT.parent / "RESULTS_REPORT.md"   # D:\ML\RESULTS_REPORT.md
+ROOT = HERE.parent                         # .../skin-lesion-vit/v2
+REPO = ROOT.parent                         # .../skin-lesion-vit  (repo root)
+EXP = ROOT / "experiments"                 # v2/experiments
+FIG_DIR = ROOT / "figures"                 # v2/figures
+OUT = REPO / "info_bank" / "RESULTS_REPORT.md"   # canonical post-consolidation location
 
 
 def grep_float(pattern: str, path: Path) -> float | None:
@@ -41,7 +42,6 @@ def cross_report(ds: str, model: str, suffix: str = "") -> dict:
     path = EXP / base / ds / (model + suffix) / "report.txt"
     if not path.exists():
         return {}
-    txt = path.read_text(encoding="utf-8")
     out = {
         "macro": grep_float(r"Macro OvR AUC\s*:\s*([\d.]+)", path),
         "mal":   grep_float(r"Malignant AUC\s*:\s*([\d.]+)", path),
@@ -109,7 +109,7 @@ This document captures the headline numbers, figures, and recipe from the v2 (le
 def section_sample_eff():
     rows = []
     rows.append("## 1. Sample efficiency on HAM10000\n")
-    rows.append("![Sample efficiency](figures/fig1_sample_efficiency.png)\n")
+    rows.append("![Sample efficiency](../v2/figures/fig1_sample_efficiency.png)\n")
     rows.append("\n| Train fraction | Train lesions | PanDerm probe | EfficientNetV2-M | ConvNeXt-V2 | DINOv2+Reg FT |")
     rows.append("|---|---:|---:|---:|---:|---:|")
     for frac_int, lesions in [(10, 534), (25, 1335), (50, 2668), (100, 5336)]:
@@ -158,7 +158,7 @@ def section_in_distribution():
 def section_cross_dataset():
     rows = []
     rows.append("## 3. Cross-dataset evaluation\n")
-    rows.append("![Fairness frontier](figures/fig2_fairness_frontier.png)\n")
+    rows.append("![Fairness frontier](../v2/figures/fig2_fairness_frontier.png)\n")
     rows.append("\n### ISIC 2019 (HAM10K-7 taxonomy)\n")
     rows.append("| Model | Macro OvR AUC |")
     rows.append("|---|---:|")
@@ -195,7 +195,7 @@ def section_cross_dataset():
 def section_tent():
     rows = []
     rows.append("## 4. Test-time adaptation (TENT)\n")
-    rows.append("![TENT improvement](figures/fig3_tent_improvement.png)\n")
+    rows.append("![TENT improvement](../v2/figures/fig3_tent_improvement.png)\n")
     rows.append("\nPer-(model, dataset) TENT improvement on dark-skin Malignant AUC, comparing baseline (no TENT) against the best-tuned TENT config:\n")
     rows.append("\n| Dataset | Model | Baseline | + TENT (best) | Δ | Best config |")
     rows.append("|---|---|---:|---:|---:|---|")
@@ -218,7 +218,7 @@ def section_tent():
 def section_pandem_fix():
     rows = []
     rows.append("## 5. PanDerm loader fix — impact\n")
-    rows.append("![PanDerm fix](figures/fig4_pandem_loader_fix.png)\n")
+    rows.append("![PanDerm fix](../v2/figures/fig4_pandem_loader_fix.png)\n")
     rows.append("\nThe DermLIP/PanDerm HuggingFace repo (`redlessone/DermLIP_PanDerm-base-w-PubMed-256`) is an **open_clip** checkpoint without a `config.json`. `transformers.AutoModel.from_pretrained` raises and a silent `try/except` falls back to `facebook/dinov2-with-registers-base`. Every `pandem_*` checkpoint (without `_real`) is therefore DINOv2+Registers, not PanDerm.\n")
     rows.append("\nThe fix (`RealPanDermClassifier` in `src/models/registry.py`): build `timm.models.beit.Beit` with `use_abs_pos_emb=True, use_rel_pos_bias=False, init_values=0.1, global_pool='token'`, load the visual sub-state-dict from `open_clip_pytorch_model.bin` — 0 missing / 0 unexpected keys.\n")
     return "\n".join(rows)
@@ -272,7 +272,7 @@ Get-Content experiments\\cross_dataset_ensemble_tent_lr1e-3\\report.txt
 
 ---
 
-*Report assembled from artifacts under `D:/ML/skin-lesion-vit-v2/experiments/` and figures under `figures/`. Trust the underlying `.txt` files if any number here disagrees with them.*
+*Report assembled from artifacts under `skin-lesion-vit/v2/experiments/` and figures under `skin-lesion-vit/v2/figures/`. Trust the underlying `.txt` files if any number here disagrees with them.*
 """
 
 

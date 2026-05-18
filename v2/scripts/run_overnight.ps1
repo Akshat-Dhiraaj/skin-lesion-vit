@@ -10,42 +10,7 @@
 # continues. Progress appended to D:\ML\OVERNIGHT_RESULTS.md.
 # ---------------------------------------------------------------------------
 
-$ErrorActionPreference = 'Continue'
-$WorkRoot = 'D:\ML\skin-lesion-vit-v2'
-$LogFile = 'D:\ML\OVERNIGHT_RESULTS.md'
-$StartTime = Get-Date
-
-Set-Location $WorkRoot
-& "$WorkRoot\.venv\Scripts\Activate.ps1"
-$env:PYTHONIOENCODING = 'utf-8'
-
-function Log-Line {
-    param([string]$Line)
-    $ts = (Get-Date).ToString('yyyy-MM-ddTHH:mm:ssZ')
-    "[$ts] $Line" | Tee-Object -FilePath $LogFile -Append
-}
-
-function Run-Step {
-    param(
-        [string]$Tag,
-        [string]$Cmd
-    )
-    Log-Line "$Tag : START -- $Cmd"
-    $stepStart = Get-Date
-    try {
-        Invoke-Expression $Cmd
-        $exit = $LASTEXITCODE
-        $dur = ((Get-Date) - $stepStart).TotalMinutes
-        if ($exit -eq 0 -or $exit -eq $null) {
-            Log-Line ("$Tag : DONE  -- {0:N1} min" -f $dur)
-        } else {
-            Log-Line ("$Tag : FAIL  -- exit={0}  ({1:N1} min)" -f $exit, $dur)
-        }
-    } catch {
-        $dur = ((Get-Date) - $stepStart).TotalMinutes
-        Log-Line ("$Tag : ERROR -- $($_.Exception.Message)  ({0:N1} min)" -f $dur)
-    }
-}
+. "$PSScriptRoot\_lib.ps1"   # $WorkRoot, $LogFile, $StartTime, Log-Line, Run-Step, venv, UTF-8 (historical script; behavior unchanged)
 
 Log-Line ""
 Log-Line "================================================================"

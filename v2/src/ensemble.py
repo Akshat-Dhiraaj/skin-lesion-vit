@@ -117,6 +117,15 @@ def slsqp_search(probs_list: list[np.ndarray], labels: np.ndarray) -> dict:
     """
     Continuous optimisation over weights using SLSQP.
     Faster than grid search for >4 models, may find better optima.
+
+    NOT consolidated with post_hoc.fit_per_class_weights or
+    cross_dataset_ensemble.slsqp_weights despite surface similarity: this is a
+    *global* macro-OvR-AUC objective; post_hoc fits an independent weight
+    vector *per class*; cross_dataset takes a generic objective_fn with a
+    baseline fallback. Init points / ftol / objective shape differ, and every
+    committed results.txt was produced by these exact implementations. Merging
+    would risk changing published numbers under the strict behavior-
+    preservation policy — the duplication is intentional.
     """
     n_models = len(probs_list)
 
