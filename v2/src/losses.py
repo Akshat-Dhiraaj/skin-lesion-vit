@@ -33,12 +33,20 @@ class BinaryFocalLoss(nn.Module):
         # logits: (B,) or (B, 1)
         # targets: (B,) {0,1}
         if logits.dim() == 2 and logits.shape[1] == 1:
-            logits = logits.squeeze(1)
+            logits = logits.squeeze(1)               # (B,1) -> (B,) single-logit head
         targets = targets.float()
+        # per-sample BCE; reduction handled at the end after focal weighting
         bce = F.binary_cross_entropy_with_logits(logits, targets, reduction="none")
         p = torch.sigmoid(logits)
+        # p_t = model's predicted prob of the *true* class (p if y=1 else 1-p)
         p_t = p * targets + (1 - p) * (1 - targets)
+        # α-balance term. ⚠️ TRAP (OA1): with a 50/50 balanced sampler you want
+        # alpha ≈ 0.5. Lin et al.'s default alpha=0.25 *down-weights* positives
+        # (correct for 1:1000 detection anchors, WRONG here) — using 0.25 here
+        # collapsed the ConvNeXt mel head to 0 recall. See 02_MODELS_AND_TECHNIQUES.md.
         alpha_t = self.alpha * targets + (1 - self.alpha) * (1 - targets)
+        # focal term (1-p_t)^gamma down-weights easy (already-confident) samples
+        # so the gradient focuses on the hard, near-the-boundary ones.
         loss = alpha_t * (1 - p_t).pow(self.gamma) * bce
         if self.reduction == "mean":
             return loss.mean()

@@ -1,8 +1,8 @@
 # Skin Lesion v2 — Results Report
 
-> Auto-generated from `experiments/` artifacts on 2026-05-18 07:54 UTC.
+> Auto-generated from `experiments/` artifacts on 2026-05-18 08:07 UTC.
 
-This document captures the headline numbers, figures, and recipe from the v2 (lesion-level-splits, cross-dataset audited) iteration of the skin lesion classification project. For project context, see [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md); for findings + publishability discussion, see [`FINDINGS.md`](FINDINGS.md).
+This document captures the headline numbers, figures, and recipe from the v2 (lesion-level-splits, cross-dataset audited) iteration of the skin lesion classification project. For project context, see [`03_COMPLETE_GUIDE.md`](03_COMPLETE_GUIDE.md); for findings + publishability discussion, see [`04_FINDINGS_AND_RESUME.md`](04_FINDINGS_AND_RESUME.md).
 
 ## TL;DR
 

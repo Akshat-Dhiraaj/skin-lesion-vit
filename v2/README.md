@@ -199,7 +199,7 @@ Binary mel vs non-mel head (sigmoid logit) + BinaryFocalLoss + 1:1 balanced samp
 
 ## Model registry
 
-> **For what each backbone is, how it works, why it was chosen, and the paper behind it, see the [Model & Technique Compendium](../info_bank/MODELS.md)** — a per-model deep-dive with verified citations. The table below is the operational config only.
+> **For what each backbone is, how it works, why it was chosen, and the paper behind it, see the [Model & Technique Compendium](../info_bank/02_MODELS_AND_TECHNIQUES.md)** — a per-model deep-dive with verified citations. The table below is the operational config only.
 
 `src/models/registry.py` exposes one `ModelConfig` per backbone. `build_model()` dispatches on `model_type`. All backbones implement `forward(x) -> logits`.
 

@@ -6,8 +6,8 @@
 > files before acting on them.
 >
 > **Model/technique deep-dives** (what each model is, how it works, why chosen,
-> paper + link, result it produced) live in [`MODELS.md`](MODELS.md). This file
-> stays terse and operational; `MODELS.md` is the explanatory companion.
+> paper + link, result it produced) live in [`02_MODELS_AND_TECHNIQUES.md`](02_MODELS_AND_TECHNIQUES.md). This file
+> stays terse and operational; `02_MODELS_AND_TECHNIQUES.md` is the explanatory companion.
 
 ---
 
@@ -17,8 +17,8 @@
 D:\ML\
 ├── .idea/                              PyCharm metadata — ignore
 ├── .venv/                              shared venv for both projects (Python 3.11+)
-├── Skin_Lesion_Project_Complete_Guide.md   long-form project journal (~110KB) — narrative, not authoritative
-├── AI_context.md                       THIS FILE
+├── 03_COMPLETE_GUIDE.md   long-form project journal (~110KB) — narrative, not authoritative
+├── 06_AI_AGENT_CONTEXT.md                       THIS FILE
 ├── main.py                             PyCharm boilerplate (`print_hi`) — unused, ignore
 ├── skin-lesion-vit/                    v1 — image-level splits, 22 phases
 │   └── README.md                       authoritative for v1 — synced with experiments/*/results.txt
@@ -300,7 +300,7 @@ When information conflicts, trust:
 1. The Python source files under `src/` and `scripts/`.
 2. The actual files in `experiments/` (especially `results.txt`, `tta_results.txt`, `report.txt`).
 3. The two `README.md` files.
-4. `Skin_Lesion_Project_Complete_Guide.md` — narrative, may lag.
-5. This file (`AI_context.md`) — written 2026-05-13; verify before recommending anything time-sensitive.
+4. `03_COMPLETE_GUIDE.md` — narrative, may lag.
+5. This file (`06_AI_AGENT_CONTEXT.md`) — written 2026-05-13; verify before recommending anything time-sensitive.
 
 Numerical results in v1/v2 READMEs were transcribed from `results.txt` files; if you observe a mismatch, the `results.txt` wins and the README needs a follow-up update.

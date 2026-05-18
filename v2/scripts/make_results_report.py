@@ -4,7 +4,7 @@ scripts/make_results_report.py
 Compile a single self-contained markdown report from the live `experiments/`
 artifacts. Embeds the four figures from make_plots.py.
 
-Output: D:/ML/RESULTS_REPORT.md
+Output: <repo>/info_bank/01_RESULTS.md  (canonical, numbered reading path)
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ ROOT = HERE.parent                         # .../skin-lesion-vit/v2
 REPO = ROOT.parent                         # .../skin-lesion-vit  (repo root)
 EXP = ROOT / "experiments"                 # v2/experiments
 FIG_DIR = ROOT / "figures"                 # v2/figures
-OUT = REPO / "info_bank" / "RESULTS_REPORT.md"   # canonical post-consolidation location
+OUT = REPO / "info_bank" / "01_RESULTS.md"   # canonical post-consolidation location
 
 
 def grep_float(pattern: str, path: Path) -> float | None:
@@ -90,7 +90,7 @@ def section_headline():
 
 > Auto-generated from `experiments/` artifacts on {datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}.
 
-This document captures the headline numbers, figures, and recipe from the v2 (lesion-level-splits, cross-dataset audited) iteration of the skin lesion classification project. For project context, see [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md); for findings + publishability discussion, see [`FINDINGS.md`](FINDINGS.md).
+This document captures the headline numbers, figures, and recipe from the v2 (lesion-level-splits, cross-dataset audited) iteration of the skin lesion classification project. For project context, see [`03_COMPLETE_GUIDE.md`](03_COMPLETE_GUIDE.md); for findings + publishability discussion, see [`04_FINDINGS_AND_RESUME.md`](04_FINDINGS_AND_RESUME.md).
 
 ## TL;DR
 

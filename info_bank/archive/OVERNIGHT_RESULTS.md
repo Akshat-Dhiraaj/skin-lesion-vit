@@ -39,7 +39,7 @@
   (Notably beats pandem_ft (0.8101) on cross-dataset despite lower in-distribution AUC — 224px better for OOD generalization than 256px)
 
 [2026-05-13T00:25:00Z] T-DOC-2: DONE — v2 README updated (siglip2_probe row, pandem_probe_224 row, updated TTA table, new ISIC rows, registry table updated, caveats updated).
-[2026-05-13T00:25:00Z] T-DOC-3: DONE — AI_context.md updated (trained models list, cross-dataset state, normalization note, pitfall #2, pitfall #10, pitfall #12).
+[2026-05-13T00:25:00Z] T-DOC-3: DONE — 06_AI_AGENT_CONTEXT.md updated (trained models list, cross-dataset state, normalization note, pitfall #2, pitfall #10, pitfall #12).
 
 === OVERNIGHT SUMMARY ===
 Started:  2026-05-12T20:34:14Z
@@ -395,7 +395,7 @@ Recommended immediate follow-ups:
 [2026-05-16T09:33:17Z] make_plots : START -- python scripts/make_plots.py
 [2026-05-16T09:33:18Z] make_plots : DONE  -- 0.0 min
 [2026-05-16T09:33:18Z] 
-[2026-05-16T09:33:18Z] ## (f) Compile RESULTS_REPORT.md
+[2026-05-16T09:33:18Z] ## (f) Compile 01_RESULTS.md
 [2026-05-16T09:33:18Z] 
 [2026-05-16T09:33:18Z] make_results_report : START -- python scripts/make_results_report.py
 [2026-05-16T09:33:19Z] make_results_report : DONE  -- 0.0 min
@@ -403,7 +403,7 @@ Recommended immediate follow-ups:
 [2026-05-16T09:33:19Z] ================================================================
 [2026-05-16T09:33:19Z] OVERNIGHT QUEUE 3 END -- total 7.8 hr
 [2026-05-16T09:33:19Z] Outputs to check in the morning:
-[2026-05-16T09:33:19Z]   D:\ML\skin-lesion-vit\info_bank\RESULTS_REPORT.md                                    <- start here
+[2026-05-16T09:33:19Z]   D:\ML\skin-lesion-vit\info_bank\01_RESULTS.md                                    <- start here
 [2026-05-16T09:33:19Z]   D:\ML\skin-lesion-vit\v2\figures\fig1_sample_efficiency.png
 [2026-05-16T09:33:19Z]   D:\ML\skin-lesion-vit\v2\figures\fig2_fairness_frontier.png
 [2026-05-16T09:33:19Z]   D:\ML\skin-lesion-vit\v2\figures\fig3_tent_improvement.png
@@ -427,7 +427,7 @@ Recommended immediate follow-ups:
 [2026-05-16T13:33:57Z] ================================================================
 [2026-05-16T13:33:57Z] RUN-FINISH END -- 0.1 min
 [2026-05-16T13:33:57Z] Outputs:
-[2026-05-16T13:33:57Z]   D:\ML\skin-lesion-vit\info_bank\RESULTS_REPORT.md                                      <- start here
+[2026-05-16T13:33:57Z]   D:\ML\skin-lesion-vit\info_bank\01_RESULTS.md                                      <- start here
 [2026-05-16T13:33:57Z]   D:\ML\skin-lesion-vit\v2\figures\fig{1,2,3,4}.{png,pdf}
 [2026-05-16T13:33:57Z]   experiments\cross_dataset_ensemble_tent_best\report.txt
 [2026-05-16T13:33:57Z] ================================================================

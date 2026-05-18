@@ -99,10 +99,14 @@ def map_ham10k_probs_to_universal(probs_7: np.ndarray) -> np.ndarray:
     n = probs_7.shape[0]
     out = np.zeros((n, 3), dtype=np.float32)
 
+    # Sum (not max/argmax) each HAM10000 class's probability into its parent
+    # universal bucket. Summing keeps the result a proper probability
+    # distribution (mass is conserved, rows still sum to 1) and is what makes
+    # the malignant-vs-rest AUC well-defined on DDI/Fitz17k.
     for ham_cls, ham_i in HAM10K_TO_IDX.items():
-        u = HAM10K_TO_UNIVERSAL[ham_cls]
-        u_i = UNIVERSAL_TO_IDX[u]
-        out[:, u_i] += probs_7[:, ham_i]
+        u = HAM10K_TO_UNIVERSAL[ham_cls]      # e.g. 'mel' -> 'malignant'
+        u_i = UNIVERSAL_TO_IDX[u]             # universal column index
+        out[:, u_i] += probs_7[:, ham_i]      # accumulate this class's mass
 
     # The model's prob mass on benign+malignant covers ALL its prediction.
     # Non-neoplastic gets 0 because HAM10000 has no such class. This means

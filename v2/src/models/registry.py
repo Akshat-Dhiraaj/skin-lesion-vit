@@ -261,12 +261,21 @@ class PanDermClassifier(nn.Module):
         super().__init__()
         from transformers import AutoModel
 
+        # ⚠️ KNOWN TRAP: the DermLIP/PanDerm HF repo is an *open_clip*
+        # checkpoint (no config.json), so AutoModel.from_pretrained ALWAYS
+        # raises here and the except-branch silently swaps in a completely
+        # different model (DINOv2+Registers). Every `pandem_*` checkpoint in
+        # experiments/ was therefore trained on DINOv2, NOT PanDerm. This
+        # class is kept only so those historical checkpoints still load;
+        # use `RealPanDermClassifier` (model_type="pandem_real") for the
+        # actual PanDerm encoder. See 06_AI_AGENT_CONTEXT.md pitfall #2.
         try:
             # Try loading the specified model (DermLIP_PanDerm by default)
             self.backbone = AutoModel.from_pretrained(model_id, trust_remote_code=True)
             print(f"[OK] Loaded {model_id}")
         except Exception as e:
-            # Fallback to DINOv2+Registers if the model isn't available
+            # Silent fallback (the trap above). The [WARN] line is the ONLY
+            # signal in the training log that the model isn't what you think.
             print(f"[WARN] Failed to load {model_id}: {e}")
             print("  Falling back to DINOv2+Registers...")
             self.backbone = AutoModel.from_pretrained("facebook/dinov2-with-registers-base")
@@ -311,19 +320,40 @@ class RealPanDermClassifier(nn.Module):
         from huggingface_hub import hf_hub_download
         from timm.models.beit import Beit
 
+        # Step 1: pull the raw open_clip weight blob from the HF hub. We bypass
+        # transformers.AutoModel entirely (that path silently fell back to
+        # DINOv2 — see PanDermClassifier above). hf_hub_download just fetches
+        # the file into the local HF cache and returns its path.
         weights_path = hf_hub_download(model_id, "open_clip_pytorch_model.bin")
         full_sd = torch.load(weights_path, map_location="cpu", weights_only=False)
+
+        # Step 2: the checkpoint is a full CLIP (vision + text towers). Keep
+        # only the vision tower: filter keys starting with "visual." and strip
+        # that prefix so they match a standalone timm backbone's key names.
         visual_sd = {k.replace("visual.", "", 1): v for k, v in full_sd.items() if k.startswith("visual.")}
+        # Drop the CLIP projection head ("head.*"): we attach our own 7-class
+        # classifier instead of the 512-d CLIP embedding projection.
         visual_sd = {k: v for k, v in visual_sd.items() if not k.startswith("head.")}
 
+        # Step 3: rebuild the EXACT architecture the weights expect. These flags
+        # were reverse-engineered from the state_dict key names:
+        #   - separate q_bias/v_bias + shared qkv  -> BEiT-style attention
+        #   - blocks.*.gamma_1 / gamma_2           -> LayerScale (init_values)
+        #   - pos_embed present, no rel_pos table  -> absolute pos emb, no rel
+        #   - keys say `norm.*` not `fc_norm.*`    -> global_pool="token"
+        # Any mismatch here => non-zero missing/unexpected below.
         self.backbone = Beit(
             img_size=224, patch_size=16, in_chans=3,
-            num_classes=0, embed_dim=768, depth=12, num_heads=12,
+            num_classes=0,                       # headless: we add our own head
+            embed_dim=768, depth=12, num_heads=12,
             mlp_ratio=4, qkv_bias=True,
             use_abs_pos_emb=True, use_rel_pos_bias=False, use_shared_rel_pos_bias=False,
-            init_values=0.1,
-            global_pool="token",
+            init_values=0.1,                     # turns on LayerScale gamma_1/2
+            global_pool="token",                 # CLS-token pooling -> uses `norm`
         )
+        # strict=False so we can inspect mismatches; then we HARD-FAIL on any
+        # missing/unexpected key. This is the guarantee that we actually loaded
+        # PanDerm and not garbage — a silent partial load is worse than a crash.
         missing, unexpected = self.backbone.load_state_dict(visual_sd, strict=False)
         if missing or unexpected:
             raise RuntimeError(
@@ -331,12 +361,13 @@ class RealPanDermClassifier(nn.Module):
             )
         print(f"[OK] Loaded real PanDerm vision encoder from {model_id}")
 
-        self.head = nn.Linear(768, num_classes)
-        if freeze_backbone:
+        self.head = nn.Linear(768, num_classes)  # 768 = BEiT-Base hidden dim
+        if freeze_backbone:                       # linear-probe mode (the winner)
             for p in self.backbone.parameters():
                 p.requires_grad = False
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # global_pool="token" makes Beit return the pooled CLS feature (B, 768)
         feat = self.backbone(x)
         return self.head(feat)
 
@@ -383,11 +414,17 @@ def build_model(config: ModelConfig | str) -> nn.Module:
             )
         config = REGISTRY[config]
 
+    # Dispatch on model_type. Every branch returns an nn.Module whose
+    # forward(x) -> (B, num_classes) logits, so the training engine never
+    # needs to know which backbone family it is holding.
     mtype, mid, nc = config.model_type, config.model_id, config.num_classes
 
     if mtype == "timm":
+        # timm gives us a ready-made classifier head sized to num_classes.
         model = timm.create_model(mid, pretrained=True, num_classes=nc)
         if config.freeze_backbone:
+            # Linear-probe: freeze everything whose param name is NOT part of
+            # the classifier head (timm names heads "head"/"classifier"/"fc").
             head_kw = ("head", "classifier", "fc")
             for name, p in model.named_parameters():
                 if not any(k in name for k in head_kw):
@@ -426,17 +463,23 @@ def build_optimizer(model: nn.Module, cfg: ModelConfig) -> torch.optim.Optimizer
       - Backbone params (pretrained)        → cfg.lr_backbone
     Frozen params (requires_grad=False) are excluded automatically.
     """
+    # Split params into "head" (randomly initialised — needs a high LR to
+    # learn fast) vs "backbone" (pretrained — needs a tiny LR or it gets
+    # destroyed). Name-substring match mirrors the freeze logic in build_model.
     head_kw = ("head", "classifier", "fc")
     head_params, backbone_params = [], []
 
     for name, p in model.named_parameters():
-        if not p.requires_grad:
+        if not p.requires_grad:           # frozen (linear-probe) -> never optimise
             continue
         if any(k in name for k in head_kw):
             head_params.append(p)
         else:
             backbone_params.append(p)
 
+    # Two AdamW param-groups with different LRs (discriminative fine-tuning).
+    # backbone group is omitted entirely when lr_backbone == 0 (probe mode):
+    # adding a group with lr=0 would still compute/clip its grads for nothing.
     param_groups = []
     if backbone_params and cfg.lr_backbone > 0:
         param_groups.append({"params": backbone_params, "lr": cfg.lr_backbone})

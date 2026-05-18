@@ -2202,7 +2202,7 @@ Light-to-dark AUC gap: 0.1101
 
 # PART 20: Foundation Models for Dermatology (Beyond ImageNet)
 
-> See also [`MODELS.md`](MODELS.md) at the project root — a compact per-model compendium (what / how it works / why chosen / result / paper link) covering every backbone and technique. This Part is the narrative version; `MODELS.md` is the quick-reference table version.
+> See also [`02_MODELS_AND_TECHNIQUES.md`](02_MODELS_AND_TECHNIQUES.md) at the project root — a compact per-model compendium (what / how it works / why chosen / result / paper link) covering every backbone and technique. This Part is the narrative version; `02_MODELS_AND_TECHNIQUES.md` is the quick-reference table version.
 
 **Plain English.** A *foundation model* is a giant pretrained model that's supposed to "know" everything in its domain. Examples in vision: CLIP (OpenAI), DINOv2 (Meta), SigLIP (Google). For dermatology specifically, two recent ones matter:
 
@@ -2652,11 +2652,11 @@ For top-level docs:
 
 | File | Contents |
 |---|---|
-| `D:\ML\skin-lesion-vit\info_bank\AI_context.md` | Single source of truth for AI agents picking up work |
-| `D:\ML\skin-lesion-vit\info_bank\FINDINGS.md` | Consolidated findings + publishability + resume bullets |
-| `D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md` | Chronological log of every overnight run |
-| `D:\ML\skin-lesion-vit\info_bank\NEXT_STEPS.md` | Archive index — what's done, what's deliberately deferred |
-| `D:\ML\skin-lesion-vit\info_bank\Skin_Lesion_Project_Complete_Guide.md` | This file — pedagogical reference |
+| `D:\ML\skin-lesion-vit\info_bank\06_AI_AGENT_CONTEXT.md` | Single source of truth for AI agents picking up work |
+| `D:\ML\skin-lesion-vit\info_bank\04_FINDINGS_AND_RESUME.md` | Consolidated findings + publishability + resume bullets |
+| `D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md` | Chronological log of every overnight run |
+| `D:\ML\skin-lesion-vit\info_bank\05_ROADMAP.md` | Archive index — what's done, what's deliberately deferred |
+| `D:\ML\skin-lesion-vit\info_bank\03_COMPLETE_GUIDE.md` | This file — pedagogical reference |
 | `D:\ML\skin-lesion-vit\README.md` | v1 leaderboard + phase descriptions (frozen) |
 | `D:\ML\skin-lesion-vit\v2\README.md` | v2 public-facing project page |
 | `D:\ML\skin-lesion-vit\v2\PHASES.md` | Live phase ledger (E1-E15, B1-B6, OA1-OA4) |

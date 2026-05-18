@@ -9,10 +9,10 @@ This repository contains the full project:
 | [`info_bank/`](info_bank/) | All cross-cutting knowledge docs — see [`info_bank/README.md`](info_bank/README.md) |
 
 **Where to start:**
-- New here / want the story → [`info_bank/Skin_Lesion_Project_Complete_Guide.md`](info_bank/Skin_Lesion_Project_Complete_Guide.md) (32-part teach-yourself guide)
-- Final results + figures → [`info_bank/RESULTS_REPORT.md`](info_bank/RESULTS_REPORT.md)
-- Every model/technique explained + papers → [`info_bank/MODELS.md`](info_bank/MODELS.md)
-- Findings / publishability / resume bullets → [`info_bank/FINDINGS.md`](info_bank/FINDINGS.md)
+- New here / want the story → [`info_bank/03_COMPLETE_GUIDE.md`](info_bank/03_COMPLETE_GUIDE.md) (32-part teach-yourself guide)
+- Final results + figures → [`info_bank/01_RESULTS.md`](info_bank/01_RESULTS.md)
+- Every model/technique explained + papers → [`info_bank/02_MODELS_AND_TECHNIQUES.md`](info_bank/02_MODELS_AND_TECHNIQUES.md)
+- Findings / publishability / resume bullets → [`info_bank/04_FINDINGS_AND_RESUME.md`](info_bank/04_FINDINGS_AND_RESUME.md)
 
 ---
 

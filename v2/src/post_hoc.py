@@ -204,9 +204,12 @@ def apply_platt(probs: np.ndarray, calibrators: list) -> np.ndarray:
     n_classes = probs.shape[1]
     out = np.zeros_like(probs)
     for c in range(n_classes):
-        if calibrators[c] is None:
+        if calibrators[c] is None:           # class had no positives on val -> leave raw
             out[:, c] = probs[:, c]
         else:
+            # 1-D logistic regression maps raw score -> calibrated P(class=c).
+            # [:, 1] = probability of the positive (class==c) column. Sigmoid
+            # is strictly monotonic, so this preserves ranking => AUC unchanged.
             out[:, c] = calibrators[c].predict_proba(probs[:, c].reshape(-1, 1))[:, 1]
     return out
 
@@ -216,15 +219,18 @@ def apply_platt(probs: np.ndarray, calibrators: list) -> np.ndarray:
 def fit_f2_thresholds(val_probs: np.ndarray, val_labels: np.ndarray) -> np.ndarray:
     """Per-class F2-maximising thresholds on val."""
     n_classes = val_probs.shape[1]
-    thresholds = np.full(n_classes, 0.5)
-    grid = np.linspace(0.01, 0.99, 99)
+    thresholds = np.full(n_classes, 0.5)        # default if a class has no val positives
+    grid = np.linspace(0.01, 0.99, 99)          # exhaustive 1%-step threshold sweep
     for c in range(n_classes):
-        y_c = (val_labels == c).astype(int)
+        y_c = (val_labels == c).astype(int)     # one-vs-rest binary target for class c
         if y_c.sum() == 0:
             continue
         best_t, best_f2 = 0.5, -1.0
         for t in grid:
             preds = (val_probs[:, c] > t).astype(int)
+            # F2 (beta=2) weights recall 4x precision: for melanoma a missed
+            # cancer is far costlier than a false alarm, so we tune the
+            # operating point toward recall rather than balanced F1.
             try:
                 f2 = fbeta_score(y_c, preds, beta=2, zero_division=0)
             except Exception:
@@ -238,7 +244,14 @@ def fit_f2_thresholds(val_probs: np.ndarray, val_labels: np.ndarray) -> np.ndarr
 
 
 def apply_thresholds(probs: np.ndarray, thresholds: np.ndarray) -> np.ndarray:
-    """Threshold-adjusted argmax: subtract threshold then argmax."""
+    """Threshold-adjusted argmax: subtract threshold then argmax.
+
+    Subtracting each class's tuned threshold before argmax is a single-label
+    way to apply per-class operating points: a class with a low threshold
+    (e.g. mel) gets a relative boost in the argmax race, raising its recall,
+    without ever producing multi-label output. `[None, :]` broadcasts the
+    length-C threshold vector across all N rows.
+    """
     adjusted = probs - thresholds[None, :]
     return adjusted.argmax(axis=1)
 

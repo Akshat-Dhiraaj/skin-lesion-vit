@@ -1,8 +1,29 @@
-# info_bank — Project Knowledge Base
+# 📍 START HERE — Project Knowledge Base
 
-Cross-cutting documentation for the skin lesion classification project. These files were consolidated here from the old `D:\ML\` root when the two project directories were merged into one git repository.
+**New to this project? Read the numbered files in order.** The number prefix *is* the reading path — open `01_…`, then `02_…`, and so on. You do not need to read all of them; stop when you have what you need (see the "stop after" column).
 
-## Repository layout (post-consolidation)
+| # | File | What it gives you | Stop after this if you only want… |
+|---|------|-------------------|-----------------------------------|
+| 01 | [`01_RESULTS.md`](01_RESULTS.md) | The headline numbers + figures + a copy-paste recipe to reproduce them | the 60-second "what was achieved" |
+| 02 | [`02_MODELS_AND_TECHNIQUES.md`](02_MODELS_AND_TECHNIQUES.md) | Every model & technique: what it is, how it works, why used, the result, the paper link | to understand or cite any component |
+| 03 | [`03_COMPLETE_GUIDE.md`](03_COMPLETE_GUIDE.md) | The 32-part teach-yourself guide (assumes zero ML background → TENT). Parts 1–16 = v1, 17–32 = v2 | the full story, taught from scratch |
+| 04 | [`04_FINDINGS_AND_RESUME.md`](04_FINDINGS_AND_RESUME.md) | Findings, negative results, what's publishable, ready-to-paste résumé bullets | to write this up or put it on a CV |
+| 05 | [`05_ROADMAP.md`](05_ROADMAP.md) | What is done vs. deliberately deferred | to know what's left to do |
+| 06 | [`06_AI_AGENT_CONTEXT.md`](06_AI_AGENT_CONTEXT.md) | Machine-oriented project state: pitfalls, conventions, "source of truth" for an AI/engineer resuming work | to start coding on it |
+
+**Typical paths:**
+- *"Just show me what this project is and what it achieved"* → **01**, then skim **02**.
+- *"I want to learn everything from the ground up"* → **03** (it links out to 01/02/04 where relevant).
+- *"I'm putting this on my résumé / writing it up"* → **01** → **04**.
+- *"I'm an engineer (or AI) picking up the work"* → **06** → **05** → the code in [`../v2/`](../v2/).
+
+Historical raw logs (not part of the reading path) live in [`archive/`](archive/): `OVERNIGHT_RESULTS.md` (chronological run log) and `OVERNIGHT_QUEUE.md` (the original task spec).
+
+The project's own landing page is the repo root [`../README.md`](../README.md); the v2 codebase has its own [`../v2/README.md`](../v2/README.md) and phase ledger [`../v2/PHASES.md`](../v2/PHASES.md).
+
+---
+
+## Repository layout
 
 ```
 skin-lesion-vit/                <- THE git repo (this repository)
@@ -14,34 +35,14 @@ skin-lesion-vit/                <- THE git repo (this repository)
 │   ├── src/ scripts/ tests/
 │   └── figures/                 publication figures (committed)
 └── info_bank/                   <- you are here: cross-cutting docs
+    ├── 01_RESULTS.md … 06_AI_AGENT_CONTEXT.md
+    └── archive/                 historical run logs (not in the reading path)
 ```
 
-> **Path note.** Some documents below were written when the layout was
+> **Path note.** Some documents were written when the layout was
 > `D:\ML\skin-lesion-vit\` (v1) + `D:\ML\skin-lesion-vit-v2\` (v2) as
-> *separate* repos. Bulk path rewrites were applied (`skin-lesion-vit-v2/`
-> → `../v2/`, prose `D:\ML\skin-lesion-vit-v2` → `D:\ML\skin-lesion-vit\v2`).
-> If a deep-in-prose path still looks off, the mapping is:
-> old `D:\ML\skin-lesion-vit-v2\X` → now `D:\ML\skin-lesion-vit\v2\X`;
-> old `D:\ML\<doc>.md` → now `D:\ML\skin-lesion-vit\info_bank\<doc>.md`.
-
-## What's in here
-
-| File | Purpose | Read if you want… |
-|---|---|---|
-| [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md) | 32-part teach-yourself guide (zero-ML-background → TENT). Parts 1–16 cover v1, 17–32 cover v2. | the full story, pedagogically |
-| [`RESULTS_REPORT.md`](RESULTS_REPORT.md) | Auto-generated headline results + embedded figures + recipe. | the 60-second portfolio view |
-| [`MODELS.md`](MODELS.md) | Every model & technique: what / how it works / why used / result / paper link. | to understand or cite any component |
-| [`FINDINGS.md`](FINDINGS.md) | Findings, negative results, publishability, graded resume bullets. | to write this up or put it on a CV |
-| [`AI_context.md`](AI_context.md) | Single source of truth for an AI agent picking up the project. Pitfalls, conventions. | to resume engineering work |
-| [`NEXT_STEPS.md`](NEXT_STEPS.md) | What's done vs deliberately deferred (archive index). | to know what's left |
-| [`OVERNIGHT_RESULTS.md`](OVERNIGHT_RESULTS.md) | Chronological log of every overnight run. | the raw run history |
-| [`OVERNIGHT_QUEUE.md`](OVERNIGHT_QUEUE.md) | The original task queue spec (historical). | how the overnight work was scoped |
-
-## Suggested reading order
-
-1. [`../README.md`](../README.md) — repo landing page
-2. [`RESULTS_REPORT.md`](RESULTS_REPORT.md) — what was achieved (with figures)
-3. [`MODELS.md`](MODELS.md) — how/why each model & technique
-4. [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md) — depth
-5. [`FINDINGS.md`](FINDINGS.md) — publishability + resume framing
-6. [`../v2/README.md`](../v2/README.md) — the v2 project page
+> *separate* repos, and when these docs lived at the `D:\ML\` root.
+> Bulk path rewrites were applied. If a deep-in-prose path still looks off,
+> the mapping is: old `D:\ML\skin-lesion-vit-v2\X` → now
+> `D:\ML\skin-lesion-vit\v2\X`; old `D:\ML\<NAME>.md` → now
+> `D:\ML\skin-lesion-vit\info_bank\<numbered-name>.md`.

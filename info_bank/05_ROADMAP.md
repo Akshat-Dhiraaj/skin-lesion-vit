@@ -2,10 +2,10 @@
 
 **Project status: research wrap-up.** All planned work paths have been tried, with both positive and negative results recorded. See:
 
-- [FINDINGS.md](FINDINGS.md) — consolidated review of findings, results, publishability, and resume bullets.
+- [04_FINDINGS_AND_RESUME.md](04_FINDINGS_AND_RESUME.md) — consolidated review of findings, results, publishability, and resume bullets.
 - [../v2/README.md](../v2/README.md) — public-facing project page with full tables.
 - [../v2/PHASES.md](../v2/PHASES.md) — phase-by-phase status (E, B, OA tracks).
-- [OVERNIGHT_RESULTS.md](OVERNIGHT_RESULTS.md) — chronological log of every overnight run.
+- [archive/OVERNIGHT_RESULTS.md](archive/OVERNIGHT_RESULTS.md) — chronological log of every overnight run.
 
 ---
 
@@ -67,6 +67,6 @@ Get-Content experiments\sample_efficiency\efficientnetv2_m_frac100\results.txt
 
 ## Documentation entry points
 
-- New collaborator: start with [FINDINGS.md](FINDINGS.md) (10-min read) → [../v2/README.md](../v2/README.md) (depth) → [AI_context.md](AI_context.md) (pitfalls).
+- New collaborator: start with [04_FINDINGS_AND_RESUME.md](04_FINDINGS_AND_RESUME.md) (10-min read) → [../v2/README.md](../v2/README.md) (depth) → [06_AI_AGENT_CONTEXT.md](06_AI_AGENT_CONTEXT.md) (pitfalls).
 - Reviewer interested in the PanDerm load bug: [../v2/src/models/registry.py](../v2/src/models/registry.py) `RealPanDermClassifier` + the *PanDerm loader fix* section of the v2 README.
 - Reviewer interested in fairness methodology: [../v2/src/tent.py](../v2/src/tent.py) + [../v2/src/cross_dataset_ensemble.py](../v2/src/cross_dataset_ensemble.py).

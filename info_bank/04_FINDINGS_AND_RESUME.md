@@ -4,7 +4,7 @@
 
 All numbers below are measured on held-out test sets and traceable to artifacts under `experiments/`. Nothing in this document is extrapolated, projected, or claimed to be state-of-the-art.
 
-> Companion doc: [`MODELS.md`](MODELS.md) — per-model functioning, rationale, and verified paper citations for every backbone and technique referenced here.
+> Companion doc: [`02_MODELS_AND_TECHNIQUES.md`](02_MODELS_AND_TECHNIQUES.md) — per-model functioning, rationale, and verified paper citations for every backbone and technique referenced here.
 
 ---
 

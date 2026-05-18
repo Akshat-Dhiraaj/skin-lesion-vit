@@ -59,19 +59,30 @@ def train_one_epoch(
     for step, (images, labels) in enumerate(tqdm(loader, desc="Train", leave=False)):
         images, labels = images.to(DEVICE), labels.to(DEVICE)
 
+        # Mixed precision: forward in fp16/bf16 to halve activation memory
+        # (this is what lets ConvNeXt-V2-Large @384 fit in 8 GB VRAM).
+        # Divide loss by accum_steps so that summing `accum_steps` micro-batch
+        # gradients equals the gradient of one big batch of that size.
         with torch.amp.autocast(_DEVICE_TYPE):
             loss = criterion(model(images), labels) / accum_steps
 
+        # scaler.scale() multiplies the loss up before backward so tiny fp16
+        # gradients don't underflow to zero; it's unscaled again below.
         scaler.scale(loss).backward()
-        total_loss += loss.item() * accum_steps
+        total_loss += loss.item() * accum_steps   # undo the /accum_steps for logging
 
+        # Gradient accumulation: only step the optimizer every `accum_steps`
+        # micro-batches → effective batch = batch_size * accum_steps.
+        # `or (step+1) == len(loader)` flushes the final partial bucket when
+        # the loader length isn't a multiple of accum_steps (v1 dropped this
+        # tail; v2 fixes it so no samples are silently skipped).
         if (step + 1) % accum_steps == 0 or (step + 1) == len(loader):
-            scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-            scaler.step(optimizer)
-            scaler.update()
+            scaler.unscale_(optimizer)                 # back to true grad scale
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # stabilises transformer FT
+            scaler.step(optimizer)                     # skips the step if grads are inf/NaN
+            scaler.update()                            # adapt the loss scale
             if scheduler is not None:
-                scheduler.step()
+                scheduler.step()                       # OneCycleLR steps per optimizer step
             optimizer.zero_grad()
 
     return total_loss / len(loader)
@@ -93,6 +104,8 @@ def evaluate(model: nn.Module, loader) -> dict:
         images = images.to(DEVICE)
         with torch.amp.autocast(_DEVICE_TYPE):
             logits = model(images)
+        # .float() before softmax: AMP leaves logits in fp16; softmax in fp16
+        # can overflow. Cast up, then move to CPU/numpy for sklearn metrics.
         probs = torch.softmax(logits.float(), dim=1).cpu().numpy()
         all_probs.append(probs)
         all_labels.append(labels.numpy())
@@ -100,12 +113,17 @@ def evaluate(model: nn.Module, loader) -> dict:
     all_probs = np.concatenate(all_probs)
     all_labels = np.concatenate(all_labels)
 
-    # Handle NaN from AMP overflow (EfficientNetV2 is prone to this)
+    # NaN guard: under AMP, EfficientNetV2 can overflow to NaN logits. A NaN
+    # row would make roc_auc_score raise and kill a multi-hour run, so we
+    # replace NaN rows with a uniform 1/C distribution (worst-case AUC≈0.5 for
+    # those samples) and keep going rather than crashing.
     if np.isnan(all_probs).any():
         n_nan = int(np.isnan(all_probs).any(axis=1).sum())
         print(f"  ⚠ Found {n_nan} NaN predictions — replacing with uniform 1/{all_probs.shape[1]}")
         all_probs = np.where(np.isnan(all_probs), 1.0 / all_probs.shape[1], all_probs)
 
+    # macro OvR AUC = the project's headline metric: average of the 7 one-vs-
+    # rest AUCs, every class weighted equally despite nv dominating the data.
     auc = roc_auc_score(all_labels, all_probs, multi_class="ovr", average="macro")
     acc = float((all_probs.argmax(1) == all_labels).mean())
 
@@ -210,12 +228,18 @@ def run_phase(
                 step=epoch,
             )
 
+            # Model selection is by *validation* AUC only — the test set is
+            # never consulted during training. We checkpoint on improvement so
+            # `best_model.pth` is the best-val epoch, not the last epoch
+            # (later epochs often overfit on the rare classes).
             if val_m["auc"] > best_auc:
                 best_auc = val_m["auc"]
                 torch.save(model.state_dict(), ckpt_dir / "best_model.pth")
                 print(f"  [BEST] Val AUC: {best_auc:.4f}")
 
         # ── Test eval ─────────────────────────────────────────────────────────
+        # Reload the best-val checkpoint (NOT the final-epoch weights) before
+        # touching the test set exactly once — this is the honest protocol.
         print("\nLoading best checkpoint for test evaluation...")
         model.load_state_dict(
             torch.load(ckpt_dir / "best_model.pth", map_location=DEVICE)

@@ -91,18 +91,27 @@ def split_dataset(
                 f"Drop or impute before splitting."
             )
 
-    # Pass 1 — split off test
-    n_splits_outer = max(2, round(1.0 / test_frac))
+    # THE core fix vs v1. StratifiedGroupKFold guarantees every row sharing a
+    # `group_col` value (for HAM10000: lesion_id) stays in ONE fold, while
+    # keeping class proportions balanced. K folds give a 1/K test slice, so we
+    # convert the requested fraction into a fold count and take the first fold.
+
+    # Pass 1 — carve the test set out of everything.
+    n_splits_outer = max(2, round(1.0 / test_frac))   # e.g. test_frac 0.15 -> ~7 folds -> ~14% test
     sgkf_outer = StratifiedGroupKFold(
         n_splits=n_splits_outer, shuffle=True, random_state=random_state
     )
+    # next(...split) takes only the FIRST (train_val, test) fold — deterministic
+    # given random_state, so the split is identical every run (reproducibility).
     train_val_idx, test_idx = next(
         sgkf_outer.split(df, df[label_col], groups=df[group_col])
     )
     train_val_df = df.iloc[train_val_idx].copy()
     test_df = df.iloc[test_idx].copy()
 
-    # Pass 2 — split val out of (train+val)
+    # Pass 2 — carve val out of the remaining train+val. The requested val
+    # fraction is re-expressed *relative to the train+val pool* (which is now
+    # only 1-test_frac of the data) so the final 3-way ratio matches the ask.
     val_frac_within = val_frac / (1.0 - test_frac)
     n_splits_inner = max(2, round(1.0 / val_frac_within))
     sgkf_inner = StratifiedGroupKFold(
@@ -117,6 +126,8 @@ def split_dataset(
     )
     train_df = train_val_df.iloc[train_idx].copy()
     val_df = train_val_df.iloc[val_idx].copy()
+    # Groups are disjoint by construction across both passes — assert_no_group_
+    # leakage() (below) is the belt-and-suspenders check, asserted in pytest.
 
     return (
         train_df.reset_index(drop=True),

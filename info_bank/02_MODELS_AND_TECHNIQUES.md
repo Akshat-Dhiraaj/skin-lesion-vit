@@ -2,7 +2,7 @@
 
 > Every model, training technique, and dataset used across `skin-lesion-vit` (v1) and `v2` (v2): **what it is, how it works, why we used it here, the result it produced, and the paper that backs it**. All result numbers trace to `experiments/*/results.txt` artifacts. Citations were web-verified (authors, venue, arXiv ID) during the project's skeptical-review pass.
 
-Cross-references: pedagogical depth → [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md); findings/publishability → [`FINDINGS.md`](FINDINGS.md); live numbers → [`RESULTS_REPORT.md`](RESULTS_REPORT.md); agent context → [`AI_context.md`](AI_context.md).
+Cross-references: pedagogical depth → [`03_COMPLETE_GUIDE.md`](03_COMPLETE_GUIDE.md); findings/publishability → [`04_FINDINGS_AND_RESUME.md`](04_FINDINGS_AND_RESUME.md); live numbers → [`01_RESULTS.md`](01_RESULTS.md); agent context → [`06_AI_AGENT_CONTEXT.md`](06_AI_AGENT_CONTEXT.md).
 
 ---
 

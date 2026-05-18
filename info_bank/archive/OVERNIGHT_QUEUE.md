@@ -1,6 +1,6 @@
 # Overnight Task Queue — Skin Lesion v2
 
-> **Read [AI_context.md](AI_context.md) FIRST** for project structure, conventions, and known pitfalls. This file lists work to execute. The context file explains *why*.
+> **Read [06_AI_AGENT_CONTEXT.md](../06_AI_AGENT_CONTEXT.md) FIRST** for project structure, conventions, and known pitfalls. This file lists work to execute. The context file explains *why*. *(Historical task spec — archived; paths below were written for the pre-consolidation layout.)*
 
 You are picking this up cold. Do not assume any prior conversation. Treat the code as absolute truth; verify before editing.
 
@@ -12,9 +12,9 @@ You are picking this up cold. Do not assume any prior conversation. Treat the co
 2. **GPU:** RTX 4060 Laptop, 8 GB. Single GPU. Mind the VRAM.
 3. **OS:** Windows 11 + PowerShell. If a Python subprocess deadlocks on multi-worker DataLoaders, drop to `--num_workers 0`.
 4. **Commit cadence:** one commit per completed task with a clear message. Push only if the user has set an `origin` remote (check `git remote -v` first; otherwise just commit locally).
-5. **Atomic execution:** finish a task's verification step before moving to the next. If verification fails, STOP and write a note in `OVERNIGHT_RESULTS.md` (create at repo root). Don't cascade fixes overnight.
+5. **Atomic execution:** finish a task's verification step before moving to the next. If verification fails, STOP and write a note in `archive/OVERNIGHT_RESULTS.md` (create at repo root). Don't cascade fixes overnight.
 6. **No destructive ops:** never delete existing `best_model.pth`, `results.txt`, or `*.npy` artifacts. If retraining, write to a *new* registry key, not the existing one.
-7. **Progress log:** append a line to `D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md` after every task (create on first write). Format: `[ISO timestamp] T-XXX-N: <status> — <one-line note>`. This is the only deliverable the user reads first thing in the morning.
+7. **Progress log:** append a line to `D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md` after every task (create on first write). Format: `[ISO timestamp] T-XXX-N: <status> — <one-line note>`. This is the only deliverable the user reads first thing in the morning.
 
 ---
 
@@ -194,7 +194,7 @@ Get-Content .\experiments\pandem_probe\results.txt
 # Compare Test AUC line.
 ```
 
-**Decision logic** (record in `OVERNIGHT_RESULTS.md`):
+**Decision logic** (record in `archive/OVERNIGHT_RESULTS.md`):
 - If `pandem_probe_224` test AUC > `pandem_probe` test AUC by ≥ 0.005 → recommend retraining `pandem_ft_224` (do NOT auto-trigger; flag for the user).
 - If within ±0.005 → the 256 setting is harmless; recommend keeping existing checkpoints and just updating the registry comment.
 - If `pandem_probe_224` is worse by ≥ 0.005 → flag as surprising; do nothing.
@@ -220,7 +220,7 @@ python -m src.cross_dataset --model siglip2_probe --dataset isic2019 --data_root
 Get-Content .\experiments\cross_dataset\isic2019\siglip2_probe\report.txt
 ```
 
-Append to `OVERNIGHT_RESULTS.md` the Macro OvR AUC, Malignant AUC, and Mel AUC for siglip2_probe on ISIC 2019, alongside the existing four models for comparison.
+Append to `archive/OVERNIGHT_RESULTS.md` the Macro OvR AUC, Malignant AUC, and Mel AUC for siglip2_probe on ISIC 2019, alongside the existing four models for comparison.
 
 **Commit:** `feat(eval): siglip2_probe ISIC 2019 cross-dataset report`
 
@@ -249,15 +249,15 @@ $ddiPath  = "D:\ML\skin-lesion-vit\v2\data\external\DDI\ddi_metadata.csv"
 $fitzPath = "D:\ML\skin-lesion-vit\v2\data\external\Fitzpatrick17k\fitzpatrick17k.csv"
 
 if (Test-Path $ddiPath) {
-    "DDI present — running cross-dataset eval (T-EVAL-3)" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md
+    "DDI present — running cross-dataset eval (T-EVAL-3)" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md
 } else {
-    "DDI not present — skipping T-EVAL-3. To enable, place DDI under data/external/DDI/" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md
+    "DDI not present — skipping T-EVAL-3. To enable, place DDI under data/external/DDI/" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md
 }
 
 if (Test-Path $fitzPath) {
-    "Fitz17k present — running cross-dataset eval (T-EVAL-4)" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md
+    "Fitz17k present — running cross-dataset eval (T-EVAL-4)" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md
 } else {
-    "Fitz17k not present — skipping T-EVAL-4. To enable, place Fitzpatrick17k under data/external/Fitzpatrick17k/" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md
+    "Fitz17k not present — skipping T-EVAL-4. To enable, place Fitzpatrick17k under data/external/Fitzpatrick17k/" | Tee-Object -Append D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md
 }
 ```
 
@@ -281,7 +281,7 @@ Get-Content .\experiments\cross_dataset\ddi\<model_key>\report.txt
 # Must include: Macro OvR AUC, Malignant AUC, AND Fitzpatrick-stratified light/medium/dark malignant AUC.
 ```
 
-Log light-to-dark AUC gap per model to `OVERNIGHT_RESULTS.md`. **This is the headline fairness deliverable.**
+Log light-to-dark AUC gap per model to `archive/OVERNIGHT_RESULTS.md`. **This is the headline fairness deliverable.**
 
 **Commit:** `feat(eval): DDI cross-dataset reports for all trained models`
 
@@ -358,7 +358,7 @@ Replace `<STATUS-FROM-T-TRAIN-1>` and `<STATUS-FROM-T-DATA-1>` with ✅ or 🔴 
 
 ### T-DOC-2 — Update the v2 README with new results (DOC, ~10 min)
 
-After all training/eval tasks complete, update [../v2/README.md](../v2/README.md):
+After all training/eval tasks complete, update [v2/README.md](../../v2/README.md):
 
 1. **Single-model table** (line ~17) — add a row for `siglip2_probe` if T-TRAIN-1 succeeded. Copy Val AUC / Test AUC / Test Acc from its `results.txt`.
 2. **TTA table** (line ~32) — add a row for `siglip2_probe` if its TTA report exists.
@@ -370,16 +370,16 @@ After all training/eval tasks complete, update [../v2/README.md](../v2/README.md
 
 ---
 
-### T-DOC-3 — Update `AI_context.md` (DOC, ~5 min)
+### T-DOC-3 — Update `06_AI_AGENT_CONTEXT.md` (DOC, ~5 min)
 
-In `D:\ML\skin-lesion-vit\info_bank\AI_context.md`:
+In `D:\ML\skin-lesion-vit\info_bank\06_AI_AGENT_CONTEXT.md`:
 
 1. **v2 trained models list** (around line 142) — add new entries that completed in this run.
 2. **Cross-dataset state** (around line 165) — update DDI / Fitz17k status if T-EVAL-3/4 ran.
 3. **Pitfall #2** (line ~245) — flip the "Probable bug in PanDerm input resolution" note: report the A/B result from T-TRAIN-2's comparison. If pandem_224 beat pandem_256 → upgrade from "Probable bug" to "Confirmed bug; pandem_probe_224 wins by X". If no significant difference → "256 is harmless; bug downgraded to cosmetic".
 4. **Normalization caveat** (in v2 data pipeline section, line ~175) — flip "siglip2_probe is not yet trained" → cite the trained result.
 
-**Commit:** `docs(context): update AI_context.md with overnight outcomes`
+**Commit:** `docs(context): update 06_AI_AGENT_CONTEXT.md with overnight outcomes`
 
 ---
 
@@ -391,10 +391,10 @@ After all tasks complete (or are explicitly skipped):
 cd D:\ML\skin-lesion-vit\v2
 pytest -v -x                     # everything still green
 git log --oneline -15            # ~10 commits expected
-Get-Content D:\ML\skin-lesion-vit\info_bank\OVERNIGHT_RESULTS.md   # human-readable summary for the morning
+Get-Content D:\ML\skin-lesion-vit\info_bank\archive/OVERNIGHT_RESULTS.md   # human-readable summary for the morning
 ```
 
-Append a final summary block to `OVERNIGHT_RESULTS.md`:
+Append a final summary block to `archive/OVERNIGHT_RESULTS.md`:
 
 ```
 === OVERNIGHT SUMMARY ===
@@ -441,4 +441,4 @@ git reflog                       # find pre-disaster HEAD
 git reset --hard <commit>        # only if you're certain
 ```
 
-But **prefer NOT to run destructive recovery overnight**. If you encounter a state you don't understand, stop, write a note in `OVERNIGHT_RESULTS.md`, and leave the rest of the queue undone. The user will sort it out in the morning.
+But **prefer NOT to run destructive recovery overnight**. If you encounter a state you don't understand, stop, write a note in `archive/OVERNIGHT_RESULTS.md`, and leave the rest of the queue undone. The user will sort it out in the morning.

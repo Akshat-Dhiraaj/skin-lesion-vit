@@ -32,16 +32,26 @@ def wrap_for_tent(model: nn.Module, copy_first: bool = True) -> nn.Module:
     For BatchNorm: also set track_running_stats=False so each test batch
     estimates its own statistics. For LayerNorm: only affine params adapt.
     """
+    # deepcopy by default so the caller's trained model is left untouched
+    # (TENT mutates weights in place during evaluation).
     if copy_first:
         model = copy.deepcopy(model)
+    # Freeze ALL parameters first...
     for p in model.parameters():
         p.requires_grad = False
+    # ...then re-enable ONLY the affine (weight/bias) params of normalisation
+    # layers. This is the entire TENT recipe: ~0.1% of params adapt, the
+    # feature extractor proper stays fixed (cheap, stable, no labels needed).
     for m in model.modules():
         if isinstance(m, NORM_TYPES):
             if hasattr(m, "weight") and m.weight is not None:
                 m.weight.requires_grad = True
             if hasattr(m, "bias") and m.bias is not None:
                 m.bias.requires_grad = True
+            # For BatchNorm only: drop the running mean/var so the layer
+            # normalises using THIS test batch's statistics instead of the
+            # source-domain (HAM10000) stats — the main lever that recovers
+            # accuracy under domain shift for BN-heavy CNNs (efficientnetv2_m).
             if isinstance(m, (nn.BatchNorm1d, nn.BatchNorm2d, nn.BatchNorm3d)):
                 m.track_running_stats = False
                 m.running_mean = None
@@ -50,7 +60,15 @@ def wrap_for_tent(model: nn.Module, copy_first: bool = True) -> nn.Module:
 
 
 def softmax_entropy(logits: torch.Tensor) -> torch.Tensor:
-    """Entropy of softmax distribution per sample. Shape: (B,)."""
+    """Entropy of softmax distribution per sample. Shape: (B,).
+
+    TENT's whole objective: minimising this pushes predictions toward
+    confident (low-entropy) outputs. Works when the model has *some* signal
+    on the shifted data (sharpening correct-ish predictions); can backfire
+    when it doesn't (it then sharpens confidently-wrong ones — observed for
+    pandem_real_probe on Fitz17k). Uses log_softmax (not log(softmax)) for
+    numerical stability.
+    """
     return -(logits.softmax(dim=-1) * logits.log_softmax(dim=-1)).sum(dim=-1)
 
 
@@ -93,15 +111,18 @@ def tent_evaluate(
     optimizer = torch.optim.Adam(params, lr=lr)
 
     all_probs, all_labels = [], []
+    # Online TENT: adapt on each test batch, then immediately predict it.
+    # State carries across batches (the norm affines keep drifting) — this is
+    # standard TENT and why batch order can matter slightly.
     for x, y in tqdm(loader, desc="TENT", leave=False):
         x = x.to(device)
-        for _ in range(n_steps):
+        for _ in range(n_steps):              # n_steps>1 = more adaptation, risks batch overfit
             optimizer.zero_grad()
             logits = model(x)
-            loss = softmax_entropy(logits).mean()
+            loss = softmax_entropy(logits).mean()   # unsupervised: no labels used
             loss.backward()
-            optimizer.step()
-        # Final forward (no grad) — read off the adapted prediction
+            optimizer.step()                  # nudges only the norm affines
+        # Prediction is read AFTER the adaptation step(s), under no_grad.
         with torch.no_grad():
             logits = model(x)
             probs = logits.softmax(dim=-1)

@@ -185,8 +185,15 @@ def get_weighted_sampler(df: pd.DataFrame, label_col: str = "label") -> Weighted
     Weight for each sample = 1 / count_of_its_class.
     Draws len(df) samples with replacement — one full epoch per call.
     """
+    # weight ∝ 1/class_frequency → in expectation every class is drawn
+    # equally often despite HAM10000's 58:1 nv:df imbalance. This balances
+    # the *training* stream only; val/test stay in natural order so metrics
+    # reflect the true class distribution.
     counts = df[label_col].value_counts().to_dict()
     weights = [1.0 / counts[lbl] for lbl in df[label_col]]
+    # replacement=True is required for up-sampling: rare-class rows must be
+    # drawable multiple times per epoch. num_samples=len(df) keeps an "epoch"
+    # the same nominal size as the dataset.
     return WeightedRandomSampler(
         weights=weights, num_samples=len(weights), replacement=True
     )
