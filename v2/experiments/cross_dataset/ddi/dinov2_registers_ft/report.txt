@@ -1,0 +1,21 @@
+Cross-dataset eval
+  model      : dinov2_registers_ft
+  dataset    : ddi
+  label_mode : universal
+  n_samples  : 656
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.5433
+  Malignant AUC : 0.5784
+
+--- Per-class AUC ---
+  malignant           0.5784
+  benign              0.5514
+  non_neoplastic      0.5000
+
+--- Fitzpatrick-stratified malignant AUC ---
+  light     N= 208  pos=  49  AUC=0.5787
+  medium    N= 241  pos=  74  AUC=0.6101
+  dark      N= 207  pos=  48  AUC=0.5419
+
+  Light-to-dark AUC gap: 0.0681

@@ -1,0 +1,19 @@
+convnextv2_large
+
+Best Val AUC : 0.9803
+Test AUC     : 0.9660
+Test Acc     : 0.8553
+
+              precision    recall  f1-score   support
+
+         mel       0.63      0.62      0.62       159
+          nv       0.92      0.95      0.94       958
+         bcc       0.79      0.82      0.81        74
+       akiec       0.60      0.54      0.57        46
+         bkl       0.73      0.70      0.72       157
+          df       0.88      0.41      0.56        17
+        vasc       0.93      0.65      0.76        20
+
+    accuracy                           0.86      1431
+   macro avg       0.78      0.67      0.71      1431
+weighted avg       0.85      0.86      0.85      1431

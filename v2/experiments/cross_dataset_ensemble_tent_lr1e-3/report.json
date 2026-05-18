@@ -1,0 +1,112 @@
+{
+  "models": [
+    "convnextv2_large",
+    "efficientnetv2_m",
+    "dinov2_registers_ft",
+    "pandem_real_probe"
+  ],
+  "results": [
+    {
+      "dataset": "ddi",
+      "label_mode": "universal",
+      "n_samples": 656,
+      "standalone": {
+        "convnextv2_large": {
+          "macro_ovr_auc": 0.5690853982827621,
+          "dark_mal_auc": 0.6357442348008386,
+          "light_dark_gap": 0.04760835151670728
+        },
+        "efficientnetv2_m": {
+          "macro_ovr_auc": 0.4955619287512238,
+          "dark_mal_auc": 0.43736897274633124,
+          "light_dark_gap": 0.09170303341462371
+        },
+        "dinov2_registers_ft": {
+          "macro_ovr_auc": 0.5677394335682092,
+          "dark_mal_auc": 0.6561844863731657,
+          "light_dark_gap": 0.015873015873015706
+        },
+        "pandem_real_probe": {
+          "macro_ovr_auc": 0.558878317268506,
+          "dark_mal_auc": 0.6931341719077568,
+          "light_dark_gap": 0.04374171052068632
+        }
+      },
+      "tuned_for_accuracy": {
+        "weights": {
+          "convnextv2_large": 0.07500000000000001,
+          "efficientnetv2_m": 0.07500000000000001,
+          "dinov2_registers_ft": 0.07500000000000001,
+          "pandem_real_probe": 0.775
+        },
+        "macro_ovr_auc": 0.543039463352579,
+        "dark_mal_auc": 0.6571016771488469,
+        "light_dark_gap": -0.0004465622727077845
+      },
+      "tuned_for_fairness": {
+        "weights": {
+          "convnextv2_large": 0.07500000000000001,
+          "efficientnetv2_m": 0.07500000000000001,
+          "dinov2_registers_ft": 0.07500000000000001,
+          "pandem_real_probe": 0.775
+        },
+        "macro_ovr_auc": 0.543039463352579,
+        "dark_mal_auc": 0.6571016771488469,
+        "light_dark_gap": -0.0004465622727077845
+      },
+      "ham10k_global_weights": null
+    },
+    {
+      "dataset": "fitz17k",
+      "label_mode": "universal",
+      "n_samples": 3730,
+      "standalone": {
+        "convnextv2_large": {
+          "macro_ovr_auc": 0.5332470135944097,
+          "dark_mal_auc": 0.496230046744526,
+          "light_dark_gap": 0.08440309204062868
+        },
+        "efficientnetv2_m": {
+          "macro_ovr_auc": 0.5415740596957519,
+          "dark_mal_auc": 0.6559863384419455,
+          "light_dark_gap": -0.012132495556371192
+        },
+        "dinov2_registers_ft": {
+          "macro_ovr_auc": 0.545340685670236,
+          "dark_mal_auc": 0.6104574595869694,
+          "light_dark_gap": -0.02828135248856989
+        },
+        "pandem_real_probe": {
+          "macro_ovr_auc": 0.5042037240619321,
+          "dark_mal_auc": 0.4687187947727174,
+          "light_dark_gap": 0.007752801938598508
+        }
+      },
+      "tuned_for_accuracy": {
+        "weights": {
+          "convnextv2_large": 0.07500000000000001,
+          "efficientnetv2_m": 0.7750000000000001,
+          "dinov2_registers_ft": 0.07500000000000001,
+          "pandem_real_probe": 0.07500000000000001
+        },
+        "macro_ovr_auc": 0.5434944323737071,
+        "dark_mal_auc": 0.6401829259468299,
+        "light_dark_gap": 0.008012844680121978
+      },
+      "tuned_for_fairness": {
+        "weights": {
+          "convnextv2_large": 0.07500000000000001,
+          "efficientnetv2_m": 0.7750000000000001,
+          "dinov2_registers_ft": 0.07500000000000001,
+          "pandem_real_probe": 0.07500000000000001
+        },
+        "macro_ovr_auc": 0.5434944323737071,
+        "dark_mal_auc": 0.6401829259468299,
+        "light_dark_gap": 0.008012844680121978
+      },
+      "ham10k_global_weights": null
+    }
+  ],
+  "probs_subdir": "cross_dataset_tent",
+  "model_suffix": ""
+}

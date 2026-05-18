@@ -1,0 +1,40 @@
+pandem_real_probe - TTA (8 views)
+
+
+[VAL]
+TTA AUC : 0.9692
+TTA Acc : 0.7973
+
+              precision    recall  f1-score   support
+
+         mel       0.47      0.69      0.56       159
+          nv       0.95      0.83      0.88       958
+         bcc       0.82      0.82      0.82        74
+       akiec       0.55      0.87      0.67        47
+         bkl       0.66      0.63      0.64       157
+          df       0.60      0.94      0.73        16
+        vasc       0.63      0.95      0.76        20
+
+    accuracy                           0.80      1431
+   macro avg       0.67      0.82      0.73      1431
+weighted avg       0.83      0.80      0.81      1431
+
+
+[TEST]
+TTA AUC : 0.9552
+TTA Acc : 0.7834
+Baseline: 0.9527  (delta +0.0025)
+
+              precision    recall  f1-score   support
+
+         mel       0.41      0.64      0.50       159
+          nv       0.95      0.85      0.90       958
+         bcc       0.69      0.73      0.71        74
+       akiec       0.41      0.74      0.53        46
+         bkl       0.72      0.56      0.63       157
+          df       0.62      0.59      0.61        17
+        vasc       0.74      0.85      0.79        20
+
+    accuracy                           0.78      1431
+   macro avg       0.65      0.71      0.67      1431
+weighted avg       0.83      0.78      0.80      1431

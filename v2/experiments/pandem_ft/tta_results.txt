@@ -1,0 +1,40 @@
+pandem_ft - TTA (8 views)
+
+
+[VAL]
+TTA AUC : 0.9603
+TTA Acc : 0.7666
+
+              precision    recall  f1-score   support
+
+         mel       0.39      0.69      0.50       159
+          nv       0.95      0.79      0.86       958
+         bcc       0.77      0.82      0.80        74
+       akiec       0.66      0.85      0.74        47
+         bkl       0.58      0.64      0.61       157
+          df       0.83      0.62      0.71        16
+        vasc       0.80      1.00      0.89        20
+
+    accuracy                           0.77      1431
+   macro avg       0.71      0.77      0.73      1431
+weighted avg       0.82      0.77      0.78      1431
+
+
+[TEST]
+TTA AUC : 0.9359
+TTA Acc : 0.7365
+Baseline: 0.9330  (delta +0.0029)
+
+              precision    recall  f1-score   support
+
+         mel       0.38      0.75      0.51       159
+          nv       0.95      0.78      0.86       958
+         bcc       0.62      0.70      0.66        74
+       akiec       0.40      0.54      0.46        46
+         bkl       0.56      0.55      0.55       157
+          df       0.78      0.41      0.54        17
+        vasc       0.84      0.80      0.82        20
+
+    accuracy                           0.74      1431
+   macro avg       0.65      0.65      0.63      1431
+weighted avg       0.81      0.74      0.76      1431

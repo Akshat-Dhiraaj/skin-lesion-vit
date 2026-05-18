@@ -1,0 +1,22 @@
+dinov2_registers_ft - sample efficiency (frac=0.50)
+
+Train lesions: 2668
+Train images : 3579
+
+Best Val AUC : 0.9526
+Test AUC     : 0.9333
+Test Acc     : 0.7582
+
+              precision    recall  f1-score   support
+
+         mel       0.41      0.62      0.49       159
+          nv       0.91      0.84      0.88       958
+         bcc       0.69      0.80      0.74        74
+       akiec       0.31      0.26      0.28        46
+         bkl       0.55      0.56      0.56       157
+          df       1.00      0.35      0.52        17
+        vasc       0.88      0.70      0.78        20
+
+    accuracy                           0.76      1431
+   macro avg       0.68      0.59      0.61      1431
+weighted avg       0.79      0.76      0.77      1431

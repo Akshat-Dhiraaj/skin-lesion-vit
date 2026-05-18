@@ -1,0 +1,18 @@
+Cross-dataset eval
+  model      : siglip2_probe
+  dataset    : isic2019
+  label_mode : ham10k
+  n_samples  : 15316
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.6610
+  Malignant AUC : 0.5708
+
+--- Per-class AUC ---
+  mel                 0.6782
+  nv                  0.6752
+  bcc                 0.6467
+  akiec               0.5412
+  bkl                 0.5799
+  df                  0.6790
+  vasc                0.8269

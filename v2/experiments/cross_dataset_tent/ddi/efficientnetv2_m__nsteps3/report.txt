@@ -1,0 +1,11 @@
+TENT eval -- efficientnetv2_m on ddi (universal)
+  TENT lr=0.001, n_steps=3, batch_size=8
+  n_samples = 656
+
+  Macro OvR AUC : 0.5018
+  Malignant AUC : 0.5303
+
+  Fitzpatrick-stratified Malignant AUC:
+    light    N= 208  pos=  49  AUC=0.4921
+    medium   N= 241  pos=  74  AUC=0.5868
+    dark     N= 207  pos=  48  AUC=0.4265

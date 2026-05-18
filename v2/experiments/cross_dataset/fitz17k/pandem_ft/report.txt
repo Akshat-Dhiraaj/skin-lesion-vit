@@ -1,0 +1,21 @@
+Cross-dataset eval
+  model      : pandem_ft
+  dataset    : fitz17k
+  label_mode : universal
+  n_samples  : 3730
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.5223
+  Malignant AUC : 0.6117
+
+--- Per-class AUC ---
+  malignant           0.6117
+  benign              0.4551
+  non_neoplastic      0.5000
+
+--- Fitzpatrick-stratified malignant AUC ---
+  light     N= 818  pos= 227  AUC=0.6046
+  medium    N=2076  pos= 354  AUC=0.5820
+  dark      N= 836  pos=  93  AUC=0.5886
+
+  Light-to-dark AUC gap: 0.0225

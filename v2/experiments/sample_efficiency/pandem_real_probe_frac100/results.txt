@@ -1,0 +1,22 @@
+pandem_real_probe - sample efficiency (frac=1.00)
+
+Train lesions: 5336
+Train images : 7153
+
+Best Val AUC : 0.9680
+Test AUC     : 0.9526
+Test Acc     : 0.7757
+
+              precision    recall  f1-score   support
+
+         mel       0.41      0.68      0.51       159
+          nv       0.96      0.83      0.89       958
+         bcc       0.63      0.82      0.71        74
+       akiec       0.46      0.59      0.51        46
+         bkl       0.67      0.57      0.62       157
+          df       0.56      0.59      0.57        17
+        vasc       0.69      0.90      0.78        20
+
+    accuracy                           0.78      1431
+   macro avg       0.62      0.71      0.66      1431
+weighted avg       0.82      0.78      0.79      1431

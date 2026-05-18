@@ -42,4 +42,29 @@ logs/
 
 # OS
 .DS_Store
-Thumbs.db.idea/ 
+Thumbs.db
+
+# --- v1+v2 consolidation (added when v2 was merged in as v2/) ---
+# MLflow run DB (was accidentally tracked in v1 — untracked on merge)
+mlflow.db
+*.sqlite
+*.db-journal
+
+# External fairness datasets (DDI / Fitzpatrick17k / ISIC2019 images)
+data/external/
+v2/data/
+v2/data/external/
+
+# Foundation-model raw weight blobs (HF cache lands elsewhere; defensive)
+*.bin
+
+# Per-run stdout captures
+*_stdout.log
+overnight*.log
+finish_stdout.log
+
+# KEPT ON PURPOSE (do NOT ignore — self-documenting repo):
+#   **/results.txt, **/report.txt, **/tta_results.txt   (small text metrics)
+#   v2/figures/*.png, v2/figures/*.pdf                   (publication figures)
+#   **/*.npy probability arrays (small; needed to reproduce ensembles)
+#   info_bank/*.md                                       (knowledge base)

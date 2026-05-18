@@ -1,8 +1,26 @@
-# Skin Lesion Classification — HAM10000 22-Phase Benchmark
+# Skin Lesion Classification — HAM10000 (v1 22-phase benchmark + v2 honest re-do)
+
+This repository contains the full project:
+
+| Path | What it is |
+|---|---|
+| `./` (repo root) | **v1** — 22-phase HAM10000 benchmark on image-level splits (this README) |
+| [`v2/`](v2/) | **v2** — the honest re-do: lesion-level splits, dermatology foundation models, cross-dataset fairness audit, TENT. Start at [`v2/README.md`](v2/README.md) |
+| [`info_bank/`](info_bank/) | All cross-cutting knowledge docs — see [`info_bank/README.md`](info_bank/README.md) |
+
+**Where to start:**
+- New here / want the story → [`info_bank/Skin_Lesion_Project_Complete_Guide.md`](info_bank/Skin_Lesion_Project_Complete_Guide.md) (32-part teach-yourself guide)
+- Final results + figures → [`info_bank/RESULTS_REPORT.md`](info_bank/RESULTS_REPORT.md)
+- Every model/technique explained + papers → [`info_bank/MODELS.md`](info_bank/MODELS.md)
+- Findings / publishability / resume bullets → [`info_bank/FINDINGS.md`](info_bank/FINDINGS.md)
+
+---
+
+## v1 — 22-Phase Benchmark
 
 A 22-phase progression on HAM10000 dermoscopy classification, from frozen ResNet50 baseline to a 6-model stacked ensemble. Each phase is a numbered experiment under `experiments/`, each model has a saved checkpoint plus a `results.txt`, and the engine is one unified training loop driven by a phase config.
 
-> **Honesty note.** All numbers in this README come straight from `experiments/<phase>/results.txt` files written by the training scripts. The splits used here are **image-level** `sklearn.train_test_split` stratified on `dx` (see [src/dataset.py:87](src/dataset.py:87)). This is known to leak between near-duplicate images of the same lesion. The successor project [skin-lesion-vit-v2](../skin-lesion-vit-v2) re-runs the strongest models with **lesion-level** splits and is the version to compare against published HAM10000 numbers.
+> **Honesty note.** All numbers in this README come straight from `experiments/<phase>/results.txt` files written by the training scripts. The splits used here are **image-level** `sklearn.train_test_split` stratified on `dx` (see [src/dataset.py:87](src/dataset.py:87)). This is known to leak between near-duplicate images of the same lesion. The successor project [`v2/`](v2/) re-runs the strongest models with **lesion-level** splits and is the version to compare against published HAM10000 numbers.
 
 ---
 
@@ -292,7 +310,7 @@ All phases were sized to fit 8 GB via mixed precision, gradient accumulation, an
 
 ## Successor
 
-[skin-lesion-vit-v2](../skin-lesion-vit-v2) ports the strongest models to **lesion-level splits** with pytest leakage tests, adds DermLIP-PanDerm and SigLIP 2, and extends to **cross-dataset evaluation** (ISIC 2019, DDI, Fitzpatrick17k) with Fitzpatrick-stratified fairness reporting.
+[`v2/`](v2/) ports the strongest models to **lesion-level splits** with pytest leakage tests, adds DermLIP-PanDerm and SigLIP 2, and extends to **cross-dataset evaluation** (ISIC 2019, DDI, Fitzpatrick17k) with Fitzpatrick-stratified fairness reporting.
 
 ---
 

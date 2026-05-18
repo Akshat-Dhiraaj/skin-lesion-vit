@@ -1,0 +1,19 @@
+siglip2_probe
+
+Best Val AUC : 0.9570
+Test AUC     : 0.9460
+Test Acc     : 0.7771
+
+              precision    recall  f1-score   support
+
+         mel       0.54      0.53      0.54       159
+          nv       0.93      0.87      0.90       958
+         bcc       0.61      0.68      0.64        74
+       akiec       0.38      0.57      0.45        46
+         bkl       0.59      0.62      0.61       157
+          df       0.21      0.53      0.31        17
+        vasc       0.60      0.75      0.67        20
+
+    accuracy                           0.78      1431
+   macro avg       0.55      0.65      0.59      1431
+weighted avg       0.80      0.78      0.79      1431

@@ -1,0 +1,21 @@
+Cross-dataset eval
+  model      : siglip2_probe
+  dataset    : fitz17k
+  label_mode : universal
+  n_samples  : 3730
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.5561
+  Malignant AUC : 0.5887
+
+--- Per-class AUC ---
+  malignant           0.5887
+  benign              0.5796
+  non_neoplastic      0.5000
+
+--- Fitzpatrick-stratified malignant AUC ---
+  light     N= 818  pos= 227  AUC=0.5603
+  medium    N=2076  pos= 354  AUC=0.5847
+  dark      N= 836  pos=  93  AUC=0.5684
+
+  Light-to-dark AUC gap: 0.0245

@@ -1,0 +1,11 @@
+mel_binary_pandem_real_probe_v2
+
+Backbone : pandem_real_probe
+Loss     : BinaryFocalLoss(alpha=0.5, gamma=2.0)
+
+Best Val mel AUC : 0.9047
+Test mel AUC     : 0.8794
+
+Recall @ P=0.95 : 0.0692  (threshold=0.8429)
+Recall @ P=0.90 : 0.1321  (threshold=0.8093)
+Recall @ P=0.80 : 0.1761  (threshold=0.7827)

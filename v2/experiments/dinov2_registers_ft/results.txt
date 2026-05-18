@@ -1,0 +1,19 @@
+dinov2_registers_ft
+
+Best Val AUC : 0.9570
+Test AUC     : 0.9358
+Test Acc     : 0.7987
+
+              precision    recall  f1-score   support
+
+         mel       0.53      0.65      0.58       159
+          nv       0.92      0.89      0.90       958
+         bcc       0.73      0.72      0.72        74
+       akiec       0.44      0.43      0.44        46
+         bkl       0.57      0.63      0.60       157
+          df       0.62      0.29      0.40        17
+        vasc       0.94      0.75      0.83        20
+
+    accuracy                           0.80      1431
+   macro avg       0.68      0.62      0.64      1431
+weighted avg       0.81      0.80      0.80      1431

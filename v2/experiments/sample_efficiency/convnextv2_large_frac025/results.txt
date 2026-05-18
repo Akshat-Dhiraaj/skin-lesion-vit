@@ -1,0 +1,22 @@
+convnextv2_large - sample efficiency (frac=0.25)
+
+Train lesions: 1335
+Train images : 1811
+
+Best Val AUC : 0.9418
+Test AUC     : 0.9200
+Test Acc     : 0.7596
+
+              precision    recall  f1-score   support
+
+         mel       0.41      0.43      0.42       159
+          nv       0.90      0.89      0.89       958
+         bcc       0.60      0.57      0.58        74
+       akiec       0.30      0.61      0.41        46
+         bkl       0.59      0.52      0.55       157
+          df       1.00      0.24      0.38        17
+        vasc       1.00      0.70      0.82        20
+
+    accuracy                           0.76      1431
+   macro avg       0.69      0.56      0.58      1431
+weighted avg       0.78      0.76      0.76      1431

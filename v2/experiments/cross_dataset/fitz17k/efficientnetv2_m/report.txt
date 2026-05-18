@@ -1,0 +1,21 @@
+Cross-dataset eval
+  model      : efficientnetv2_m
+  dataset    : fitz17k
+  label_mode : universal
+  n_samples  : 3730
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.5592
+  Malignant AUC : 0.6132
+
+--- Per-class AUC ---
+  malignant           0.6132
+  benign              0.5644
+  non_neoplastic      0.5000
+
+--- Fitzpatrick-stratified malignant AUC ---
+  light     N= 818  pos= 227  AUC=0.6567
+  medium    N=2076  pos= 354  AUC=0.5936
+  dark      N= 836  pos=  93  AUC=0.6040
+
+  Light-to-dark AUC gap: 0.0631

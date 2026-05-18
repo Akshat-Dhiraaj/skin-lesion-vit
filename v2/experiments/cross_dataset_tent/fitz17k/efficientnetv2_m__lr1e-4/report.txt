@@ -1,0 +1,11 @@
+TENT eval -- efficientnetv2_m on fitz17k (universal)
+  TENT lr=0.0001, n_steps=1, batch_size=8
+  n_samples = 3730
+
+  Macro OvR AUC : 0.5572
+  Malignant AUC : 0.6045
+
+  Fitzpatrick-stratified Malignant AUC:
+    light    N= 818  pos= 227  AUC=0.6354
+    medium   N=2076  pos= 354  AUC=0.5740
+    dark     N= 836  pos=  93  AUC=0.6022

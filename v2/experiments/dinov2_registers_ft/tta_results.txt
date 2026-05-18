@@ -1,0 +1,40 @@
+dinov2_registers_ft - TTA (8 views)
+
+
+[VAL]
+TTA AUC : 0.9635
+TTA Acc : 0.8085
+
+              precision    recall  f1-score   support
+
+         mel       0.53      0.61      0.57       159
+          nv       0.92      0.87      0.90       958
+         bcc       0.82      0.74      0.78        74
+       akiec       0.72      0.66      0.69        47
+         bkl       0.56      0.67      0.61       157
+          df       0.60      0.75      0.67        16
+        vasc       0.90      0.95      0.93        20
+
+    accuracy                           0.81      1431
+   macro avg       0.72      0.75      0.73      1431
+weighted avg       0.82      0.81      0.81      1431
+
+
+[TEST]
+TTA AUC : 0.9408
+TTA Acc : 0.8001
+Baseline: 0.9358  (delta +0.0050)
+
+              precision    recall  f1-score   support
+
+         mel       0.54      0.64      0.58       159
+          nv       0.92      0.89      0.91       958
+         bcc       0.74      0.72      0.73        74
+       akiec       0.40      0.37      0.38        46
+         bkl       0.56      0.65      0.60       157
+          df       0.67      0.24      0.35        17
+        vasc       0.94      0.80      0.86        20
+
+    accuracy                           0.80      1431
+   macro avg       0.68      0.61      0.63      1431
+weighted avg       0.81      0.80      0.80      1431

@@ -1,0 +1,21 @@
+Cross-dataset eval
+  model      : convnextv2_large
+  dataset    : ddi
+  label_mode : universal
+  n_samples  : 656
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.5426
+  Malignant AUC : 0.6022
+
+--- Per-class AUC ---
+  malignant           0.6022
+  benign              0.5257
+  non_neoplastic      0.5000
+
+--- Fitzpatrick-stratified malignant AUC ---
+  light     N= 208  pos=  49  AUC=0.6022
+  medium    N= 241  pos=  74  AUC=0.6478
+  dark      N= 207  pos=  48  AUC=0.5445
+
+  Light-to-dark AUC gap: 0.1033

@@ -1,0 +1,19 @@
+pandem_probe
+
+Best Val AUC : 0.9478
+Test AUC     : 0.9305
+Test Acc     : 0.7645
+
+              precision    recall  f1-score   support
+
+         mel       0.43      0.45      0.44       159
+          nv       0.91      0.87      0.89       958
+         bcc       0.48      0.72      0.57        74
+       akiec       0.36      0.43      0.40        46
+         bkl       0.64      0.57      0.61       157
+          df       0.50      0.59      0.54        17
+        vasc       0.62      0.65      0.63        20
+
+    accuracy                           0.76      1431
+   macro avg       0.56      0.61      0.58      1431
+weighted avg       0.78      0.76      0.77      1431

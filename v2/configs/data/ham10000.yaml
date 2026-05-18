@@ -1,0 +1,5 @@
+# configs/data/ham10000.yaml
+data_dir: D:\ML\skin-lesion-vit\data\raw
+val_frac: 0.15
+test_frac: 0.15
+random_state: 42

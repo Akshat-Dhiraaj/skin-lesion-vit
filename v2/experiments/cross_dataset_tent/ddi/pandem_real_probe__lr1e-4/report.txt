@@ -1,0 +1,11 @@
+TENT eval -- pandem_real_probe on ddi (universal)
+  TENT lr=0.0001, n_steps=1, batch_size=64
+  n_samples = 656
+
+  Macro OvR AUC : 0.5679
+  Malignant AUC : 0.6685
+
+  Fitzpatrick-stratified Malignant AUC:
+    light    N= 208  pos=  49  AUC=0.6809
+    medium   N= 241  pos=  74  AUC=0.7477
+    dark     N= 207  pos=  48  AUC=0.5882

@@ -1,0 +1,18 @@
+Cross-dataset eval
+  model      : dinov2_registers_ft
+  dataset    : isic2019
+  label_mode : ham10k
+  n_samples  : 15316
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.8077
+  Malignant AUC : 0.7272
+
+--- Per-class AUC ---
+  mel                 0.7481
+  nv                  0.8360
+  bcc                 0.8656
+  akiec               0.7831
+  bkl                 0.6602
+  df                  0.8405
+  vasc                0.9202

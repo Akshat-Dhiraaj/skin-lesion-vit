@@ -1,0 +1,11 @@
+mel_binary_convnextv2_large_v2
+
+Backbone : convnextv2_large
+Loss     : BinaryFocalLoss(alpha=0.5, gamma=2.0)
+
+Best Val mel AUC : 0.8934
+Test mel AUC     : 0.8942
+
+Recall @ P=0.95 : 0.0629  (threshold=0.8167)
+Recall @ P=0.90 : 0.0629  (threshold=0.8142)
+Recall @ P=0.80 : 0.2201  (threshold=0.6852)

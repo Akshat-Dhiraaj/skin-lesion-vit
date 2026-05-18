@@ -1,0 +1,22 @@
+efficientnetv2_m - sample efficiency (frac=0.50)
+
+Train lesions: 2668
+Train images : 3579
+
+Best Val AUC : 0.9463
+Test AUC     : 0.9216
+Test Acc     : 0.7778
+
+              precision    recall  f1-score   support
+
+         mel       0.43      0.48      0.46       159
+          nv       0.91      0.88      0.89       958
+         bcc       0.59      0.78      0.67        74
+       akiec       0.42      0.54      0.48        46
+         bkl       0.69      0.54      0.60       157
+          df       0.41      0.41      0.41        17
+        vasc       0.70      0.80      0.74        20
+
+    accuracy                           0.78      1431
+   macro avg       0.59      0.63      0.61      1431
+weighted avg       0.79      0.78      0.78      1431

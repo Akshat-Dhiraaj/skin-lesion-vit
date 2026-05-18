@@ -1,0 +1,26 @@
+Ensemble — 4 models (slsqp)
+
+Models and weights:
+  convnextv2_large              : 0.775
+  efficientnetv2_m              : 0.075
+  dinov2_registers_ft           : 0.075
+  pandem_real_probe             : 0.075
+
+Test AUC : 0.9731
+Test Acc : 0.8581
+Best individual : 0.9677
+Ensemble lift   : +0.0054
+
+              precision    recall  f1-score   support
+
+         mel       0.65      0.59      0.62       159
+          nv       0.92      0.95      0.94       958
+         bcc       0.78      0.82      0.80        74
+       akiec       0.66      0.59      0.62        46
+         bkl       0.73      0.73      0.73       157
+          df       1.00      0.35      0.52        17
+        vasc       0.93      0.70      0.80        20
+
+    accuracy                           0.86      1431
+   macro avg       0.81      0.68      0.72      1431
+weighted avg       0.86      0.86      0.85      1431

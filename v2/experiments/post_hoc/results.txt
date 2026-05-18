@@ -1,0 +1,55 @@
+Post-hoc analysis - 4 models
+
+Models: ['convnextv2_large', 'efficientnetv2_m', 'dinov2_registers_ft', 'pandem_real_probe']
+
+--- Individual TTA AUCs ---
+  convnextv2_large                           0.9677
+  efficientnetv2_m                           0.9555
+  dinov2_registers_ft                        0.9408
+  pandem_real_probe                          0.9552
+
+--- Pipeline metrics ---
+  [baseline] mean ensemble (test)            AUC=0.9713 Acc=0.8672 MelRecall=0.635
+  [step 1] per-class weighted ensemble       AUC=0.9733 Acc=0.8574 MelRecall=0.591
+  [step 2] + Platt sigmoid calibration       AUC=0.9733 Acc=0.8588 MelRecall=0.560
+  [step 3] + F2 threshold tuning             AUC=0.9733 Acc=0.8560 MelRecall=0.566
+
+--- Final per-class weights (rows=class, cols=models) ---
+  mel    : convnextv2_large=0.85  efficientnetv2_m=0.05  dinov2_registers_ft=0.05  pandem_real_probe=0.05
+  nv     : convnextv2_large=0.85  efficientnetv2_m=0.05  dinov2_registers_ft=0.05  pandem_real_probe=0.05
+  bcc    : convnextv2_large=0.85  efficientnetv2_m=0.05  dinov2_registers_ft=0.05  pandem_real_probe=0.05
+  akiec  : convnextv2_large=0.85  efficientnetv2_m=0.05  dinov2_registers_ft=0.05  pandem_real_probe=0.05
+  bkl    : convnextv2_large=0.85  efficientnetv2_m=0.05  dinov2_registers_ft=0.05  pandem_real_probe=0.05
+  df     : convnextv2_large=0.85  efficientnetv2_m=0.05  dinov2_registers_ft=0.05  pandem_real_probe=0.05
+  vasc   : convnextv2_large=0.05  efficientnetv2_m=0.05  dinov2_registers_ft=0.85  pandem_real_probe=0.05
+
+--- F2-optimal thresholds ---
+  mel   : 0.050
+  nv    : 0.130
+  bcc   : 0.270
+  akiec : 0.020
+  bkl   : 0.070
+  df    : 0.010
+  vasc  : 0.380
+
+--- Final per-class report ---
+              precision    recall  f1-score   support
+
+         mel       0.63      0.57      0.60       159
+          nv       0.91      0.96      0.93       958
+         bcc       0.87      0.78      0.82        74
+       akiec       0.66      0.59      0.62        46
+         bkl       0.74      0.72      0.73       157
+          df       0.86      0.35      0.50        17
+        vasc       1.00      0.65      0.79        20
+
+    accuracy                           0.86      1431
+   macro avg       0.81      0.66      0.71      1431
+weighted avg       0.85      0.86      0.85      1431
+
+
+Final test AUC      : 0.9733
+Final test accuracy : 0.8560
+Final mel recall    : 0.566
+Lift vs best single : +0.0057
+Lift vs mean ensem. : +0.0020

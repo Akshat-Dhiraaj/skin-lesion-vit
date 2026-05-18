@@ -1,0 +1,56 @@
+================================================================================
+Cross-dataset SLSQP ensemble (B4)
+================================================================================
+Models: ['convnextv2_large', 'efficientnetv2_m', 'dinov2_registers_ft', 'pandem_real_probe']
+
+--------------------------------------------------------------------------------
+  DDI  (n=656, label_mode=universal)
+--------------------------------------------------------------------------------
+Standalone per-model:
+  convnextv2_large                macro_OvR=0.5456  dark_mal=0.5558  gap=+0.0481
+  efficientnetv2_m                macro_OvR=0.5019  dark_mal=0.4430  gap=+0.1053
+  dinov2_registers_ft             macro_OvR=0.5474  dark_mal=0.5546  gap=+0.0349
+  pandem_real_probe               macro_OvR=0.5679  dark_mal=0.5882  gap=+0.0927
+
+Tuned for accuracy (max macro OvR AUC on this dataset):
+  weights:
+    convnextv2_large                0.075
+    efficientnetv2_m                0.075
+    dinov2_registers_ft             0.075
+    pandem_real_probe               0.775
+  macro_OvR=0.5621  dark_mal=0.5714  gap=+0.1073
+
+Tuned for fairness (max dark-skin Mal AUC):
+  weights:
+    convnextv2_large                0.075
+    efficientnetv2_m                0.075
+    dinov2_registers_ft             0.075
+    pandem_real_probe               0.775
+  macro_OvR=0.5621  dark_mal=0.5714  gap=+0.1073
+
+--------------------------------------------------------------------------------
+  FITZ17K  (n=3730, label_mode=universal)
+--------------------------------------------------------------------------------
+Standalone per-model:
+  convnextv2_large                macro_OvR=0.5638  dark_mal=0.5906  gap=+0.0852
+  efficientnetv2_m                macro_OvR=0.5572  dark_mal=0.6022  gap=+0.0333
+  dinov2_registers_ft             macro_OvR=0.5329  dark_mal=0.6214  gap=-0.0328
+  pandem_real_probe               macro_OvR=0.5443  dark_mal=0.4876  gap=+0.1229
+
+Tuned for accuracy (max macro OvR AUC on this dataset):
+  weights:
+    convnextv2_large                0.250
+    efficientnetv2_m                0.250
+    dinov2_registers_ft             0.250
+    pandem_real_probe               0.250
+  macro_OvR=0.5743  dark_mal=0.6086  gap=+0.0701
+
+Tuned for fairness (max dark-skin Mal AUC):
+  weights:
+    convnextv2_large                0.075
+    efficientnetv2_m                0.075
+    dinov2_registers_ft             0.775
+    pandem_real_probe               0.075
+  macro_OvR=0.5583  dark_mal=0.6190  gap=+0.0072
+
+================================================================================

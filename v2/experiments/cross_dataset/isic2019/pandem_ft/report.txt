@@ -1,0 +1,18 @@
+Cross-dataset eval
+  model      : pandem_ft
+  dataset    : isic2019
+  label_mode : ham10k
+  n_samples  : 15316
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.8101
+  Malignant AUC : 0.7120
+
+--- Per-class AUC ---
+  mel                 0.7594
+  nv                  0.8384
+  bcc                 0.8271
+  akiec               0.7902
+  bkl                 0.6446
+  df                  0.8847
+  vasc                0.9267

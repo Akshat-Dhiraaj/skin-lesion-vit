@@ -1,0 +1,19 @@
+pandem_real_ft
+
+Best Val AUC : 0.9656
+Test AUC     : 0.9295
+Test Acc     : 0.7806
+
+              precision    recall  f1-score   support
+
+         mel       0.46      0.66      0.54       159
+          nv       0.92      0.86      0.89       958
+         bcc       0.67      0.78      0.72        74
+       akiec       0.35      0.30      0.33        46
+         bkl       0.60      0.59      0.60       157
+          df       0.58      0.41      0.48        17
+        vasc       0.93      0.65      0.76        20
+
+    accuracy                           0.78      1431
+   macro avg       0.65      0.61      0.62      1431
+weighted avg       0.80      0.78      0.79      1431

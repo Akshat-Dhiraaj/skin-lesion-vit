@@ -1,0 +1,21 @@
+Cross-dataset eval
+  model      : pandem_real_probe
+  dataset    : ddi
+  label_mode : universal
+  n_samples  : 656
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.5685
+  Malignant AUC : 0.6821
+
+--- Per-class AUC ---
+  malignant           0.6821
+  benign              0.5233
+  non_neoplastic      0.5000
+
+--- Fitzpatrick-stratified malignant AUC ---
+  light     N= 208  pos=  49  AUC=0.6796
+  medium    N= 241  pos=  74  AUC=0.7666
+  dark      N= 207  pos=  48  AUC=0.5919
+
+  Light-to-dark AUC gap: 0.1748

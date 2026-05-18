@@ -1,0 +1,18 @@
+Cross-dataset eval
+  model      : convnextv2_large
+  dataset    : isic2019
+  label_mode : ham10k
+  n_samples  : 15316
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.8546
+  Malignant AUC : 0.7890
+
+--- Per-class AUC ---
+  mel                 0.7889
+  nv                  0.8650
+  bcc                 0.9128
+  akiec               0.8092
+  bkl                 0.7964
+  df                  0.8898
+  vasc                0.9201

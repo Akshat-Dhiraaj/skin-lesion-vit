@@ -1,0 +1,18 @@
+Cross-dataset eval
+  model      : efficientnetv2_m
+  dataset    : isic2019
+  label_mode : ham10k
+  n_samples  : 15316
+
+--- Overall metrics ---
+  Macro OvR AUC : 0.8294
+  Malignant AUC : 0.7569
+
+--- Per-class AUC ---
+  mel                 0.7405
+  nv                  0.8573
+  bcc                 0.8842
+  akiec               0.7886
+  bkl                 0.7490
+  df                  0.8647
+  vasc                0.9218

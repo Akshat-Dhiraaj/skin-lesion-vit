@@ -1,0 +1,11 @@
+TENT eval -- convnextv2_large on ddi (universal)
+  TENT lr=0.0001, n_steps=1, batch_size=8
+  n_samples = 656
+
+  Macro OvR AUC : 0.5456
+  Malignant AUC : 0.6028
+
+  Fitzpatrick-stratified Malignant AUC:
+    light    N= 208  pos=  49  AUC=0.6039
+    medium   N= 241  pos=  74  AUC=0.6476
+    dark     N= 207  pos=  48  AUC=0.5558
