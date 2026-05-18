@@ -1,4 +1,4 @@
-# Phases — skin-lesion-vit-v2
+# Phases — skin-lesion-vit / v2
 
 Status legend:  ✅ done · 🟡 partial · 🔴 not started · ⛔ negative result (recorded, won't pursue)
 
@@ -57,4 +57,4 @@ Status legend:  ✅ done · 🟡 partial · 🔴 not started · ⛔ negative res
 - `efficientnetv2_m + TENT(n_steps=3)` is the strongest standalone on Fitz17k dark skin overall.
 - Best in-distribution: 4-model post-hoc pipeline at HAM10000 test AUC **0.9733**.
 - Best DDI fairness: per-target TENT-aware SLSQP ensemble — dark-skin Mal AUC 0.6571 with L-D gap **-0.0004** (full closure).
-- Repository commit hash at this snapshot: see `git log --oneline | head -10` from inside `D:\ML\skin-lesion-vit-v2`.
+- Repository commit hash at this snapshot: see `git log --oneline | head -10` from inside `D:\ML\skin-lesion-vit` (single consolidated repo; v2 is the `v2/` subtree).

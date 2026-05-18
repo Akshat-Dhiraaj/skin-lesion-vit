@@ -238,7 +238,7 @@ def section_methodology():
 ## 7. Recipe to reproduce headline numbers
 
 ```powershell
-cd D:\\ML\\skin-lesion-vit-v2
+cd D:\\ML\\skin-lesion-vit\\v2
 .\\.venv\\Scripts\\Activate.ps1
 $env:PYTHONIOENCODING="utf-8"
 

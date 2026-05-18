@@ -1,6 +1,6 @@
 # Skin Lesion v2 — Results Report
 
-> Auto-generated from `experiments/` artifacts on 2026-05-18 07:33 UTC.
+> Auto-generated from `experiments/` artifacts on 2026-05-18 07:54 UTC.
 
 This document captures the headline numbers, figures, and recipe from the v2 (lesion-level-splits, cross-dataset audited) iteration of the skin lesion classification project. For project context, see [`Skin_Lesion_Project_Complete_Guide.md`](Skin_Lesion_Project_Complete_Guide.md); for findings + publishability discussion, see [`FINDINGS.md`](FINDINGS.md).
 
@@ -140,7 +140,7 @@ The fix (`RealPanDermClassifier` in `src/models/registry.py`): build `timm.model
 ## 7. Recipe to reproduce headline numbers
 
 ```powershell
-cd D:\ML\skin-lesion-vit-v2
+cd D:\ML\skin-lesion-vit\v2
 .\.venv\Scripts\Activate.ps1
 $env:PYTHONIOENCODING="utf-8"
 

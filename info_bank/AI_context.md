@@ -186,7 +186,7 @@ experiments/
 - `src/data/splits.py:split_dataset` — two-pass `StratifiedGroupKFold`. Pass 1 separates test, pass 2 separates val. Group disjoint by construction.
 - `assert_no_group_leakage()` is called right after every split — cheap insurance, asserted in `tests/test_splits.py`.
 - `src/data/ham10000.py:load_ham10000` — reads CSV, attaches paths, integer labels via `CLASS_TO_IDX`, splits via `split_ham10000` (group='lesion_id'), runs the leakage guard.
-- `src/data/transforms.py` — train (heavy aug), val (resize+norm), `get_tta_transforms` (8 views). Exposes `get_norm_stats(model_type)` → SigLIP stats `(0.5,0.5,0.5)` when `model_type="siglip2"`, ImageNet stats otherwise. `get_train_transform`, `get_val_transform`, `get_tta_transforms` accept an optional `model_type` arg; default is ImageNet for backward compat. `src/engine.py` and `src/tta.py` both pass `cfg.model_type` through.
+- `src/data/transforms.py` — exposes `get_norm_stats(model_type)` → SigLIP stats `(0.5,0.5,0.5)` when `model_type="siglip2"`, CLIP stats `(0.4815,0.4578,0.4082)` when `model_type="pandem_real"`, ImageNet otherwise; plus `get_train_transform` (heavy aug) and `get_val_transform` (resize+norm), both taking an optional `model_type` arg (default ImageNet, backward-compat). **The 8-view TTA pipeline lives in `src/tta.py:get_tta_transforms`, NOT here** — a dead duplicate `get_tta_transforms` in this file was removed in the 2026-05-16 behavior-preserving refactor (it differed from tta.py's view-8 augmentation; tta.py is the single source of truth, and produced every committed `tta_results.txt`). `src/engine.py` and `src/tta.py` pass `cfg.model_type` through.
 - WeightedRandomSampler in `get_weighted_sampler` — `weights = 1 / count(class)`.
 
 ### Key behavioural details
